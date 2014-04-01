@@ -51,7 +51,7 @@
 	</organization>
 	<name>Aircraft Reservation App</name>
 	<scm>
-		<url>https://github.com/sherdt/reservation</url>
+		<url>https://github.com/sherdt/reservation/tree/master</url>
 		<connection>git@github.com:sherdt/reservation.git</connection>
 		<developerConnection>git@github.com:sherdt/reservation.git</developerConnection>
 	</scm>
