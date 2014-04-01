@@ -1,4 +1,4 @@
 reservation
 ===========
 
-PAC reservation tool
+PAC reservation webapp
