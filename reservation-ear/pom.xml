@@ -1,0 +1,53 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.prodyna.pac.reservation</groupId>
+		<artifactId>reservation</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>reservation-ear</artifactId>
+	<packaging>ear</packaging>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-ear-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<defaultLibBundleDir>lib</defaultLibBundleDir>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<profiles>
+		<profile>
+			<id>sherdt_local_deployment</id>
+			<activation>
+				<file>
+					<exists>C:/projects/PD/PAC/wildfly-8.0.0.Final/standalone/deployments/</exists>
+				</file>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.wildfly.plugins</groupId>
+						<artifactId>wildfly-maven-plugin</artifactId>
+						<version>1.0.1.Final</version>
+						<configuration>
+							<targetDir>C:/projects/PD/PAC/wildfly-8.0.0.Final/standalone/deployments/</targetDir>
+						</configuration>
+						<executions>
+							<execution>
+								<goals>
+									<goal>deploy</goal>
+								</goals>
+								<phase>install</phase>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>

@@ -40,4 +40,23 @@
 			</plugin>
 		</plugins>
 	</build>
+	<modules>
+		<module>reservation-ear</module>
+		<module>reservation-deployment-artifact</module>
+	</modules>
+	<url>https://github.com/sherdt/reservation</url>
+	<organization>
+		<name>PRODYNA AG</name>
+		<url>http://www.prodyna.com</url>
+	</organization>
+	<name>Aircraft Reservation App</name>
+	<scm>
+		<url>https://github.com/sherdt/reservation</url>
+		<connection>git@github.com:sherdt/reservation.git</connection>
+		<developerConnection>git@github.com:sherdt/reservation.git</developerConnection>
+	</scm>
+	<ciManagement>
+		<system>Travis</system>
+		<url>https://travis-ci.org/sherdt/reservation</url>
+	</ciManagement>
 </project>
