@@ -3,16 +3,16 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.prodyna.pac.reservation</groupId>
-		<artifactId>reservation</artifactId>
+		<artifactId>aaa</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>reservation-deployment-artifact</artifactId>
+	<artifactId>aaa-deployment-artifact</artifactId>
 	<packaging>pom</packaging>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.prodyna.pac.reservation</groupId>
-			<artifactId>reservation-ear</artifactId>
+			<artifactId>aaa-ear</artifactId>
 			<version>${project.version}</version>
 			<type>ear</type>
 			<scope>runtime</scope>

@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.prodyna.pac.reservation</groupId>
-	<artifactId>reservation</artifactId>
+	<artifactId>aaa</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
@@ -41,15 +41,17 @@
 		</plugins>
 	</build>
 	<modules>
-		<module>reservation-ear</module>
-		<module>reservation-deployment-artifact</module>
+		<module>aaa-ear</module>
+		<module>aaa-deployment-artifact</module>
+		<module>aaa-aircraft-client</module>
+		<module>aaa-reservation-client</module>
 	</modules>
 	<url>https://github.com/sherdt/reservation</url>
 	<organization>
 		<name>PRODYNA AG</name>
 		<url>http://www.prodyna.com</url>
 	</organization>
-	<name>Aircraft Reservation App</name>
+	<name>Aircraft Allocation App (AAA)</name>
 	<scm>
 		<url>https://github.com/sherdt/reservation/tree/master</url>
 		<connection>git@github.com:sherdt/reservation.git</connection>

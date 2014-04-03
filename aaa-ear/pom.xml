@@ -3,10 +3,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.prodyna.pac.reservation</groupId>
-		<artifactId>reservation</artifactId>
+		<artifactId>aaa</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>reservation-ear</artifactId>
+	<artifactId>aaa-ear</artifactId>
 	<packaging>ear</packaging>
 
 	<build>
