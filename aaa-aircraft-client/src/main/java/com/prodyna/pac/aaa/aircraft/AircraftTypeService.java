@@ -13,11 +13,11 @@ public interface AircraftTypeService {
 	/**
 	 * Creates a new aircraft type.
 	 * 
-	 * @param AircraftType
+	 * @param aircraftType
 	 *            New aircraft type to create.
 	 * @return Created aircraft type.
 	 */
-	AircraftType createAircraftType(AircraftType AircraftType);
+	AircraftType createAircraftType(AircraftType aircraftType);
 
 	/**
 	 * Retrieves a list of all aircraft types.
@@ -29,11 +29,11 @@ public interface AircraftTypeService {
 	/**
 	 * Updates given aircraft type.
 	 * 
-	 * @param AircraftType
+	 * @param aircraftType
 	 *            Aircraft type to update.
 	 * @return Updated aircraft type.
 	 */
-	AircraftType updateAircraftType(AircraftType AircraftType);
+	AircraftType updateAircraftType(AircraftType aircraftType);
 
 	/**
 	 * Deletes aircraft type with given name (which is the ID).

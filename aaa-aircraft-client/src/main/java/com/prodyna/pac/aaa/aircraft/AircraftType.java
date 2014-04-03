@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -15,6 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "aircraft_type")
+@NamedQueries({ @NamedQuery(name = AircraftNamedQueries.SELECT_ALL_AIRCRAFT_TYPES, query = "SELECT at FROM AircraftType at") })
 public class AircraftType implements Serializable {
 
 	/** Generated serial version UID. */
@@ -71,9 +74,7 @@ public class AircraftType implements Serializable {
 
 	@Override
 	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("AircraftType [name=").append(this.name).append("]");
-		return builder.toString();
+		return this.name;
 	}
 
 }

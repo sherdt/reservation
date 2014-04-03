@@ -9,6 +9,21 @@
 	<artifactId>aaa-ear</artifactId>
 	<packaging>ear</packaging>
 
+	<dependencies>
+		<dependency>
+			<groupId>com.prodyna.pac.reservation</groupId>
+			<artifactId>aaa-aircraft-service</artifactId>
+			<version>${project.version}</version>
+			<type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.reservation</groupId>
+			<artifactId>aaa-reservation-service</artifactId>
+			<version>${project.version}</version>
+			<type>ejb</type>
+		</dependency>
+	</dependencies>
+
 	<build>
 		<plugins>
 			<plugin>

@@ -41,10 +41,12 @@
 		</plugins>
 	</build>
 	<modules>
+		<module>aaa-common</module>
+		<module>aaa-aircraft</module>
+		<module>aaa-reservation</module>
 		<module>aaa-ear</module>
+		<module>aaa-integration-tests</module>
 		<module>aaa-deployment-artifact</module>
-		<module>aaa-aircraft-client</module>
-		<module>aaa-reservation-client</module>
 	</modules>
 	<url>https://github.com/sherdt/reservation</url>
 	<organization>

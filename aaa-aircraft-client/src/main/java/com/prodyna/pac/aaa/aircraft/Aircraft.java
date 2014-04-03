@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -15,17 +19,36 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "aircraft")
+@NamedQueries({ @NamedQuery(name = AircraftNamedQueries.SELECT_ALL_AIRCRAFTS, query = "SELECT a FROM Aircraft a") })
 public class Aircraft implements Serializable {
 
 	/** Generated serial version UID. */
 	private static final long serialVersionUID = -5404182914981856065L;
 
 	/** Type of the aircraft. */
+	@JoinColumn(name = "name")
+	@ManyToOne
 	private AircraftType aircraftType;
 
 	/** Unique aircraft tail sign, also used as id. */
 	@Id
 	private String tailSign;
+
+	/**
+	 * Default constructor.
+	 */
+	public Aircraft() {
+	}
+
+	/**
+	 * Constructor setting the tail sign.
+	 * 
+	 * @param tailSign
+	 *            Tail sing to use for this aircraft.
+	 */
+	public Aircraft(final String tailSign) {
+		this.tailSign = tailSign;
+	}
 
 	/**
 	 * @return the aircraftType
@@ -47,14 +70,6 @@ public class Aircraft implements Serializable {
 	 */
 	public String getTailSign() {
 		return this.tailSign;
-	}
-
-	/**
-	 * @param tailSign
-	 *            the tailSign to set
-	 */
-	public void setTailSign(final String tailSign) {
-		this.tailSign = tailSign;
 	}
 
 	@Override

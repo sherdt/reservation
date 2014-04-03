@@ -7,7 +7,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>aaa-aircraft-client</artifactId>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>org.jboss.spec</groupId>
@@ -15,6 +15,11 @@
 			<version>1.0.0.Final</version>
 			<type>pom</type>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.reservation</groupId>
+			<artifactId>aaa-common</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 </project>

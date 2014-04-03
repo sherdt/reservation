@@ -2,6 +2,8 @@ package com.prodyna.pac.aaa.aircraft;
 
 import java.util.List;
 
+import com.prodyna.pac.aaa.common.exceptions.DeleteException;
+
 /**
  * CRUD service interface for the {@link Aircraft}.
  * 
@@ -40,6 +42,8 @@ public interface AircraftService {
 	 * 
 	 * @param tailSign
 	 *            Tail sign of the aircraft to delete.
+	 * @throws DeleteException
+	 *             If the aircraft is used an cannot be deleted.
 	 */
-	void deleteAircraft(String tailSign);
+	void deleteAircraft(String tailSign) throws DeleteException;
 }
