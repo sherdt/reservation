@@ -3,7 +3,7 @@ package com.prodyna.pac.aaa.aircraft;
 import java.util.List;
 
 /**
- * CRUD service interface for AircraftType.
+ * CRUD service interface for {@link AircraftType}.
  * 
  * @author Sergej Herdt, PRODYNA AG
  * 
@@ -14,7 +14,7 @@ public interface AircraftTypeService {
 	 * Creates a new aircraft type.
 	 * 
 	 * @param AircraftType
-	 *            new aircraft type to create.
+	 *            New aircraft type to create.
 	 * @return Created aircraft type.
 	 */
 	AircraftType createAircraftType(AircraftType AircraftType);
