@@ -3,6 +3,7 @@
 	<name>reservation-ear</name>
 	<comment></comment>
 	<projects>
+		<project>aaa-web</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

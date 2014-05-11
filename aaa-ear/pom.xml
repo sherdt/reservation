@@ -12,6 +12,12 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.prodyna.pac.reservation</groupId>
+			<artifactId>aaa-common-service</artifactId>
+			<version>${project.version}</version>
+			<type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.reservation</groupId>
 			<artifactId>aaa-aircraft-service</artifactId>
 			<version>${project.version}</version>
 			<type>ejb</type>
@@ -21,6 +27,12 @@
 			<artifactId>aaa-reservation-service</artifactId>
 			<version>${project.version}</version>
 			<type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.reservation</groupId>
+			<artifactId>aaa-web</artifactId>
+			<version>${project.version}</version>
+			<type>war</type>
 		</dependency>
 	</dependencies>
 
@@ -39,9 +51,9 @@
 		<profile>
 			<id>sherdt_local_deployment</id>
 			<activation>
-				<file>
-					<exists>C:/projects/PD/PAC/wildfly-8.0.0.Final/standalone/deployments/</exists>
-				</file>
+				<property>
+					<name>performLocalDeployment</name>
+				</property>
 			</activation>
 			<build>
 				<plugins>

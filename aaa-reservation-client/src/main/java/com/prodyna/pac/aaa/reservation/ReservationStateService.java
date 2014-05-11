@@ -13,11 +13,21 @@ public interface ReservationStateService {
 	/**
 	 * Creates a new reservation state.
 	 * 
-	 * @param ReservationState
+	 * @param reservationState
 	 *            New reservation state to create.
 	 * @return Created reservation state.
 	 */
-	ReservationState createReservationState(ReservationState ReservationState);
+	ReservationState createReservationState(ReservationState reservationState);
+
+	/**
+	 * Retrieves the reservation state by given name.
+	 * 
+	 * @param name
+	 *            Name of the reservation state to read.
+	 * 
+	 * @return Reservation state represented by given name.
+	 */
+	ReservationState readReservationState(String name);
 
 	/**
 	 * Retrieves a list of all reservation states.
@@ -29,11 +39,11 @@ public interface ReservationStateService {
 	/**
 	 * Updates given reservation state.
 	 * 
-	 * @param ReservationState
+	 * @param reservationState
 	 *            Reservation state to update.
 	 * @return Updated reservation state.
 	 */
-	ReservationState updateReservationState(ReservationState ReservationState);
+	ReservationState updateReservationState(ReservationState reservationState);
 
 	/**
 	 * Deletes reservation state with given name (which is the ID).

@@ -10,7 +10,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.prodyna.pac.reservation</groupId>
-			<artifactId>aaa-common</artifactId>
+			<artifactId>aaa-common-client</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

@@ -20,6 +20,16 @@ public interface AircraftTypeService {
 	AircraftType createAircraftType(AircraftType aircraftType);
 
 	/**
+	 * Retrieves an aircraft type by its name.
+	 * 
+	 * @param name
+	 *            The name of the aircraft type to retrieve (e.g. A380).
+	 * 
+	 * @return aircraft type represented by given name
+	 */
+	AircraftType readAircraftType(final String name);
+
+	/**
 	 * Retrieves a list of all aircraft types.
 	 * 
 	 * @return List of all available aircraft types.

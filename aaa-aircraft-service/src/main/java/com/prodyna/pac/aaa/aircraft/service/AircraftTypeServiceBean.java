@@ -3,13 +3,14 @@ package com.prodyna.pac.aaa.aircraft.service;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import com.prodyna.pac.aaa.aircraft.AircraftNamedQueries;
 import com.prodyna.pac.aaa.aircraft.AircraftType;
 import com.prodyna.pac.aaa.aircraft.AircraftTypeService;
-import com.prodyna.pac.aaa.common.Constants;
+import com.prodyna.pac.aaa.common.annotation.Monitored;
 
 /**
  * Session Bean implementation class AircraftTypeServiceBean for {@link AircraftTypeService}.
@@ -18,18 +19,26 @@ import com.prodyna.pac.aaa.common.Constants;
  * 
  */
 @Stateless
+@Monitored
 public class AircraftTypeServiceBean implements AircraftTypeService {
 
-	/**
-	 * Entity manger for DB access.
-	 */
-	@PersistenceContext(unitName = Constants.PERSISTENSE_UNIT_NAME)
+	/** Entity manger for DB access. */
+	@Inject
 	private EntityManager entityManager;
 
 	@Override
 	public AircraftType createAircraftType(final AircraftType aircraftType) {
 		this.entityManager.persist(aircraftType);
 		return aircraftType;
+	}
+
+	@Override
+	public AircraftType readAircraftType(final String name) {
+		final TypedQuery<AircraftType> namedQuery = this.entityManager.createNamedQuery(
+				AircraftNamedQueries.SELECT_AIRCRAFT_TYPE_BY_NAME, AircraftType.class);
+		namedQuery.setParameter("aircraftTypeName", name);
+
+		return namedQuery.getSingleResult();
 	}
 
 	@Override

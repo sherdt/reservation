@@ -11,7 +11,19 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.prodyna.pac.reservation</groupId>
+			<artifactId>aaa-common-service</artifactId>
+			<version>${project.version}</version>
+			<type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.reservation</groupId>
 			<artifactId>aaa-aircraft-service</artifactId>
+			<version>${project.version}</version>
+			<type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.reservation</groupId>
+			<artifactId>aaa-pilot-service</artifactId>
 			<version>${project.version}</version>
 			<type>ejb</type>
 		</dependency>
@@ -55,7 +67,7 @@
 					<argLine>-Xmx1124m -Xms256m</argLine>
 					<systemPropertyVariables>
 						<java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
-						<wildfly.home>${wildfly.home}</wildfly.home>
+						<arquillian.launch>jboss-wildfly</arquillian.launch>
 					</systemPropertyVariables>
 				</configuration>
 			</plugin>

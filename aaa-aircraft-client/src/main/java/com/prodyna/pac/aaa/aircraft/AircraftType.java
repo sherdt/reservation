@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Entity representing the type of an aircraft. The name is used as unique an identifier (e.g. <code>A380</code>,
@@ -16,16 +17,35 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name = "aircraft_type")
-@NamedQueries({ @NamedQuery(name = AircraftNamedQueries.SELECT_ALL_AIRCRAFT_TYPES, query = "SELECT at FROM AircraftType at") })
+@XmlRootElement
+@Table(name = "aaa_aircraft_type")
+@NamedQueries({
+		@NamedQuery(name = AircraftNamedQueries.SELECT_ALL_AIRCRAFT_TYPES, query = "SELECT at FROM AircraftType at"),
+		@NamedQuery(name = AircraftNamedQueries.SELECT_AIRCRAFT_TYPE_BY_NAME, query = "SELECT at FROM AircraftType at WHERE at.name = :aircraftTypeName") })
 public class AircraftType implements Serializable {
 
 	/** Generated serial version UID. */
-	private static final long serialVersionUID = 5812602489312169141L;
+	private static final long serialVersionUID = -5166120093592174406L;
 
 	/** Name of the aircraft type. */
 	@Id
 	private String name;
+
+	/**
+	 * Default constructor.
+	 */
+	public AircraftType() {
+	}
+
+	/**
+	 * Constructor setting the name.
+	 * 
+	 * @param name
+	 *            Aircraft type e.g. <code>747</code>
+	 */
+	public AircraftType(final String name) {
+		this.name = name;
+	}
 
 	/**
 	 * @return the name
@@ -43,7 +63,7 @@ public class AircraftType implements Serializable {
 	}
 
 	@Override
-	public int hashCode() {
+	public final int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((this.name == null) ? 0 : this.name.hashCode());
@@ -51,14 +71,14 @@ public class AircraftType implements Serializable {
 	}
 
 	@Override
-	public boolean equals(final Object obj) {
+	public final boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
 		}
 		if (obj == null) {
 			return false;
 		}
-		if (this.getClass() != obj.getClass()) {
+		if (!(obj instanceof AircraftType)) {
 			return false;
 		}
 		final AircraftType other = (AircraftType) obj;

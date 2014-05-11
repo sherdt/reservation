@@ -7,9 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import com.prodyna.pac.aaa.aircraft.Aircraft;
 
@@ -20,13 +23,17 @@ import com.prodyna.pac.aaa.aircraft.Aircraft;
  * 
  */
 @Entity
-@Table(name = "reservation")
+@XmlRootElement
+@Table(name = "aaa_reservation")
+@NamedQueries({
+		@NamedQuery(name = ReservationNamedQueries.SELECT_ALL_RESERVATIONS, query = "SELECT r FROM Reservation r"),
+		@NamedQuery(name = ReservationNamedQueries.SELECT_RESERVATION_BY_ID, query = "SELECT r FROM Reservation r WHERE r.id = :reservationId") })
 public class Reservation implements Serializable {
 
 	/** Generated serial version UID. */
-	private static final long serialVersionUID = 8060033254574982695L;
+	private static final long serialVersionUID = 4605124792752621798L;
 
-	/** The unique id for the reservation. It's recommended to use an generated UUID. */
+	/** The unique id for the reservation. It's recommended to use a (client) generated UUID. */
 	@Id
 	private String id;
 
@@ -124,7 +131,7 @@ public class Reservation implements Serializable {
 	}
 
 	@Override
-	public int hashCode() {
+	public final int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
@@ -132,14 +139,14 @@ public class Reservation implements Serializable {
 	}
 
 	@Override
-	public boolean equals(final Object obj) {
+	public final boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
 		}
 		if (obj == null) {
 			return false;
 		}
-		if (this.getClass() != obj.getClass()) {
+		if (!(obj instanceof Reservation)) {
 			return false;
 		}
 		final Reservation other = (Reservation) obj;

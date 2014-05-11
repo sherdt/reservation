@@ -17,9 +17,19 @@ public interface AircraftService {
 	 * 
 	 * @param Aircraft
 	 *            New aircraft to create.
-	 * @return Created aircraft type.
+	 * @return Created aircraft.
 	 */
 	Aircraft createAircraft(Aircraft Aircraft);
+
+	/**
+	 * Retrieves an aircraft represented by its tail sign.
+	 * 
+	 * @param tailSign
+	 *            Tail sign to retrieve the aircraft for.
+	 * 
+	 * @return The aircraft represented by given tail sign.
+	 */
+	Aircraft readAircraft(String tailSign);
 
 	/**
 	 * Retrieves a list of all aircrafts.

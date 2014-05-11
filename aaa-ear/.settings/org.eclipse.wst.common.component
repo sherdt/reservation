@@ -2,19 +2,25 @@
     <wb-module deploy-name="aaa-ear-0.0.1-SNAPSHOT">
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/ear-resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/application" tag="defaultRootSource"/>
+        <dependent-module archiveName="aaa-common-service-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/aaa-common-service/aaa-common-service">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="aaa-common-client-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/aaa-common-client/aaa-common-client">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="aaa-aircraft-service-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/aaa-aircraft-service/aaa-aircraft-service">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="aaa-aircraft-client-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/aaa-aircraft-client/aaa-aircraft-client">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="aaa-common-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/aaa-common/aaa-common">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="aaa-reservation-service-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/aaa-reservation-service/aaa-reservation-service">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="aaa-reservation-client-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/aaa-reservation-client/aaa-reservation-client">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="aaa-web-0.0.1-SNAPSHOT.war" deploy-path="/" handle="module:/resource/aaa-web/aaa-web">
             <dependency-type>uses</dependency-type>
         </dependent-module>
     </wb-module>

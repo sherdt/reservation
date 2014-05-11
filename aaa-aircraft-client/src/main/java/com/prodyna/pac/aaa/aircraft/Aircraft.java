@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Entity representing an aircraft with its tail sign and the {@link AircraftType}. The tail sign has to be unique.<br>
@@ -18,12 +19,15 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name = "aircraft")
-@NamedQueries({ @NamedQuery(name = AircraftNamedQueries.SELECT_ALL_AIRCRAFTS, query = "SELECT a FROM Aircraft a") })
+@XmlRootElement
+@Table(name = "aaa_aircraft")
+@NamedQueries({
+		@NamedQuery(name = AircraftNamedQueries.SELECT_ALL_AIRCRAFTS, query = "SELECT a FROM Aircraft a"),
+		@NamedQuery(name = AircraftNamedQueries.SELECT_AIRCRAFT_BY_TAIL_SIGN, query = "SELECT a FROM Aircraft a WHERE a.tailSign = :tailSign") })
 public class Aircraft implements Serializable {
 
 	/** Generated serial version UID. */
-	private static final long serialVersionUID = -5404182914981856065L;
+	private static final long serialVersionUID = 6568192466570616625L;
 
 	/** Type of the aircraft. */
 	@JoinColumn(name = "name")
@@ -73,7 +77,7 @@ public class Aircraft implements Serializable {
 	}
 
 	@Override
-	public int hashCode() {
+	public final int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((this.tailSign == null) ? 0 : this.tailSign.hashCode());
@@ -81,14 +85,14 @@ public class Aircraft implements Serializable {
 	}
 
 	@Override
-	public boolean equals(final Object obj) {
+	public final boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
 		}
 		if (obj == null) {
 			return false;
 		}
-		if (this.getClass() != obj.getClass()) {
+		if (!(obj instanceof Aircraft)) {
 			return false;
 		}
 		final Aircraft other = (Aircraft) obj;
