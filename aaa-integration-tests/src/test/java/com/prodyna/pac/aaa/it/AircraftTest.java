@@ -14,6 +14,7 @@ import com.prodyna.pac.aaa.aircraft.Aircraft;
 import com.prodyna.pac.aaa.aircraft.AircraftService;
 import com.prodyna.pac.aaa.aircraft.AircraftType;
 import com.prodyna.pac.aaa.aircraft.AircraftTypeService;
+import com.prodyna.pac.aaa.common.exceptions.AircraftAllocationAppException;
 import com.prodyna.pac.aaa.common.exceptions.DeleteException;
 
 /**
@@ -54,9 +55,11 @@ public class AircraftTest {
 	 * 
 	 * @throws DeleteException
 	 *             If deletion failed.
+	 * @throws AircraftAllocationAppException
+	 *             Should not be thrown in this test.
 	 */
 	@Test
-	public void crudServiceIntegrationTest() throws DeleteException {
+	public void crudServiceIntegrationTest() throws AircraftAllocationAppException {
 
 		Assert.assertEquals(0, this.aircraftTypeService.readAircraftTypes().size());
 

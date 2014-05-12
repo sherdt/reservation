@@ -5,12 +5,12 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 
 import com.prodyna.pac.aaa.aircraft.AircraftNamedQueries;
 import com.prodyna.pac.aaa.aircraft.AircraftType;
 import com.prodyna.pac.aaa.aircraft.AircraftTypeService;
 import com.prodyna.pac.aaa.common.annotation.Monitored;
+import com.prodyna.pac.aaa.common.exceptions.EntitiyNotFoundException;
 
 /**
  * Session Bean implementation class AircraftTypeServiceBean for {@link AircraftTypeService}.
@@ -33,12 +33,13 @@ public class AircraftTypeServiceBean implements AircraftTypeService {
 	}
 
 	@Override
-	public AircraftType readAircraftType(final String name) {
-		final TypedQuery<AircraftType> namedQuery = this.entityManager.createNamedQuery(
-				AircraftNamedQueries.SELECT_AIRCRAFT_TYPE_BY_NAME, AircraftType.class);
-		namedQuery.setParameter("aircraftTypeName", name);
+	public AircraftType readAircraftType(final String name) throws EntitiyNotFoundException {
+		final AircraftType aircraftType = this.entityManager.find(AircraftType.class, name);
+		if (aircraftType == null) {
+			throw new EntitiyNotFoundException("Aircraft type could not be found for given name [" + name + "]");
+		}
 
-		return namedQuery.getSingleResult();
+		return aircraftType;
 	}
 
 	@Override

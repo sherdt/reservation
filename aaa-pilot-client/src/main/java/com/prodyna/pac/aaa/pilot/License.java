@@ -25,19 +25,18 @@ import com.prodyna.pac.aaa.aircraft.AircraftType;
 @Entity
 @XmlRootElement
 @Table(name = "aaa_license")
-@NamedQueries({ @NamedQuery(name = PilotNamedQueries.SELECT_ALL_LICENSES, query = "SELECT l FROM License l"),
-		@NamedQuery(name = PilotNamedQueries.SELECT_LICENSE_BY_ID, query = "SELECT l FROM License l WHERE l.id = :id") })
+@NamedQueries({ @NamedQuery(name = PilotNamedQueries.SELECT_ALL_LICENSES, query = "SELECT l FROM License l") })
 public class License implements Serializable {
 
 	/** Generated serial version UID. */
-	private static final long serialVersionUID = -2972862250508021273L;
+	private static final long serialVersionUID = -7525446826633069369L;
 
 	/** The unique id for the license. It's recommended to use a (client) generated UUID. */
 	@Id
 	private String id;
 
 	/** Type of the aircraft. */
-	@JoinColumn(name = "name", nullable = false)
+	@JoinColumn(name = "aaa_aircraft_type_name", nullable = false, referencedColumnName = "name")
 	@ManyToOne
 	private AircraftType aircraftType;
 

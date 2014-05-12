@@ -2,6 +2,8 @@ package com.prodyna.pac.aaa.pilot;
 
 import java.util.List;
 
+import com.prodyna.pac.aaa.common.exceptions.EntitiyNotFoundException;
+
 /**
  * CRUD service interface for the {@link Pilot}.
  * 
@@ -26,8 +28,10 @@ public interface PilotService {
 	 *            User name to retrieve the pilot for.
 	 * 
 	 * @return The pilot represented by the given user name.
+	 * @throws EntitiyNotFoundException
+	 *             If no {@link Pilot} could be found for given user name.
 	 */
-	Pilot readPilot(String username);
+	Pilot readPilot(String username) throws EntitiyNotFoundException;
 
 	/**
 	 * Retrieves a list of all pilots.

@@ -25,9 +25,7 @@ import com.prodyna.pac.aaa.aircraft.Aircraft;
 @Entity
 @XmlRootElement
 @Table(name = "aaa_reservation")
-@NamedQueries({
-		@NamedQuery(name = ReservationNamedQueries.SELECT_ALL_RESERVATIONS, query = "SELECT r FROM Reservation r"),
-		@NamedQuery(name = ReservationNamedQueries.SELECT_RESERVATION_BY_ID, query = "SELECT r FROM Reservation r WHERE r.id = :reservationId") })
+@NamedQueries({ @NamedQuery(name = ReservationNamedQueries.SELECT_ALL_RESERVATIONS, query = "SELECT r FROM Reservation r") })
 public class Reservation implements Serializable {
 
 	/** Generated serial version UID. */
@@ -46,12 +44,12 @@ public class Reservation implements Serializable {
 	private Date endDate;
 
 	/** The state of this reservation. */
-	@JoinColumn(name = "name")
+	@JoinColumn(name = "aaa_reservation_state_name", nullable = false, referencedColumnName = "name")
 	@ManyToOne
 	private ReservationState reservationState;
 
 	/** The aircraft this reservation is for. */
-	@JoinColumn(name = "tailSign")
+	@JoinColumn(name = "aaa_reservation_tail_sign", nullable = false, referencedColumnName = "tailSign")
 	@ManyToOne
 	private Aircraft aircraft;
 

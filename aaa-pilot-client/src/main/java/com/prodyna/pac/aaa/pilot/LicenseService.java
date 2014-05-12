@@ -2,6 +2,8 @@ package com.prodyna.pac.aaa.pilot;
 
 import java.util.List;
 
+import com.prodyna.pac.aaa.common.exceptions.EntitiyNotFoundException;
+
 /**
  * CRUD service interface for the {@link License}.
  * 
@@ -26,8 +28,10 @@ public interface LicenseService {
 	 *            Id to retrieve the license for.
 	 * 
 	 * @return The license represented by given id.
+	 * @throws EntitiyNotFoundException
+	 *             If no {@link License} could be found for given id.
 	 */
-	License readLicense(String id);
+	License readLicense(String id) throws EntitiyNotFoundException;
 
 	/**
 	 * Retrieves a list of all licenses.

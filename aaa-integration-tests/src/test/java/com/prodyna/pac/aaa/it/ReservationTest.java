@@ -18,6 +18,7 @@ import com.prodyna.pac.aaa.aircraft.Aircraft;
 import com.prodyna.pac.aaa.aircraft.AircraftService;
 import com.prodyna.pac.aaa.aircraft.AircraftType;
 import com.prodyna.pac.aaa.aircraft.AircraftTypeService;
+import com.prodyna.pac.aaa.common.exceptions.EntitiyNotFoundException;
 import com.prodyna.pac.aaa.reservation.Reservation;
 import com.prodyna.pac.aaa.reservation.ReservationService;
 import com.prodyna.pac.aaa.reservation.ReservationState;
@@ -67,9 +68,12 @@ public class ReservationTest {
 	/**
 	 * Tests all methods of the CRUD service for {@link ReservationStateService}.
 	 * 
+	 * @throws EntitiyNotFoundException
+	 *             Should not be thrown in this test.
+	 * 
 	 */
 	@Test
-	public void reservationStateCrudServiceIntegrationTest() {
+	public void reservationStateCrudServiceIntegrationTest() throws EntitiyNotFoundException {
 
 		Assert.assertEquals(0, this.reservationStateService.readReservationStates().size());
 
@@ -90,14 +94,20 @@ public class ReservationTest {
 
 		final ReservationState readReservationState = this.reservationStateService.readReservationState("RESERVED");
 		Assert.assertEquals(readReservationStates.get(0), readReservationState);
+
+		this.reservationStateService.deleteReservationState("RESERVED");
+		Assert.assertEquals(0, this.reservationStateService.readReservationStates().size());
 	}
 
 	/**
 	 * Tests all methods of the CRUD service for {@link ReservationService}.
 	 * 
+	 * @throws EntitiyNotFoundException
+	 *             Should not be thrown in this test.
+	 * 
 	 */
 	@Test
-	public void reservationCrudServiceIntegrationTest() {
+	public void reservationCrudServiceIntegrationTest() throws EntitiyNotFoundException {
 		Assert.assertEquals(0, this.reservationService.readReservations().size());
 
 		final Calendar calendar = Calendar.getInstance();
@@ -123,7 +133,9 @@ public class ReservationTest {
 		reservation.setAircraft(aircraft);
 		reservation.setStartDate(startDate);
 		reservation.setEndDate(endDate);
-		reservation.setReservationState(new ReservationState("RESERVED"));
+		final ReservationState reservationState = new ReservationState("RESERVED");
+		this.reservationStateService.createReservationState(reservationState);
+		reservation.setReservationState(reservationState);
 
 		// test the creation of an reservation
 		this.reservationService.createReservation(reservation);

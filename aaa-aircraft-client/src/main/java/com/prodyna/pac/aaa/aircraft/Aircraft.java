@@ -21,16 +21,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @XmlRootElement
 @Table(name = "aaa_aircraft")
-@NamedQueries({
-		@NamedQuery(name = AircraftNamedQueries.SELECT_ALL_AIRCRAFTS, query = "SELECT a FROM Aircraft a"),
-		@NamedQuery(name = AircraftNamedQueries.SELECT_AIRCRAFT_BY_TAIL_SIGN, query = "SELECT a FROM Aircraft a WHERE a.tailSign = :tailSign") })
+@NamedQueries({ @NamedQuery(name = AircraftNamedQueries.SELECT_ALL_AIRCRAFTS, query = "SELECT a FROM Aircraft a") })
 public class Aircraft implements Serializable {
 
 	/** Generated serial version UID. */
 	private static final long serialVersionUID = 6568192466570616625L;
 
 	/** Type of the aircraft. */
-	@JoinColumn(name = "name")
+	@JoinColumn(name = "aaa_aircraft_type_name", nullable = false, referencedColumnName = "name")
 	@ManyToOne
 	private AircraftType aircraftType;
 

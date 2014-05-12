@@ -2,6 +2,8 @@ package com.prodyna.pac.aaa.aircraft;
 
 import java.util.List;
 
+import com.prodyna.pac.aaa.common.exceptions.EntitiyNotFoundException;
+
 /**
  * CRUD service interface for {@link AircraftType}.
  * 
@@ -26,8 +28,10 @@ public interface AircraftTypeService {
 	 *            The name of the aircraft type to retrieve (e.g. A380).
 	 * 
 	 * @return aircraft type represented by given name
+	 * @throws EntitiyNotFoundException
+	 *             If no {@link AircraftType} could be found for given name.
 	 */
-	AircraftType readAircraftType(final String name);
+	AircraftType readAircraftType(final String name) throws EntitiyNotFoundException;
 
 	/**
 	 * Retrieves a list of all aircraft types.

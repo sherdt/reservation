@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
@@ -24,13 +25,11 @@ import com.prodyna.pac.aaa.reservation.Reservation;
 @Entity
 @XmlRootElement
 @Table(name = "aaa_pilot")
-@NamedQueries({
-		@NamedQuery(name = PilotNamedQueries.SELECT_ALL_PILOTS, query = "SELECT p FROM Pilot p"),
-		@NamedQuery(name = PilotNamedQueries.SELECT_PILOT_BY_USERNAME, query = "SELECT p FROM Pilot p WHERE p.username = :username") })
+@NamedQueries({ @NamedQuery(name = PilotNamedQueries.SELECT_ALL_PILOTS, query = "SELECT p FROM Pilot p") })
 public class Pilot implements Serializable {
 
 	/** Generated serial version UID. */
-	private static final long serialVersionUID = -6758414591012325692L;
+	private static final long serialVersionUID = 6634014111036721573L;
 
 	/** Unique user name, also used as id. */
 	@Id
@@ -46,12 +45,12 @@ public class Pilot implements Serializable {
 	private String password;
 
 	/** All licenses belonging to this pilot. */
-	@OneToMany(cascade = CascadeType.REMOVE)
+	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	@JoinColumn(name = "aaa_pilot_username", referencedColumnName = "username")
 	private Set<License> licenses;
 
 	/** All reservations belonging to this pilot. */
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "aaa_pilot_username", referencedColumnName = "username")
 	private Set<Reservation> reservations;
 
@@ -144,6 +143,21 @@ public class Pilot implements Serializable {
 	 */
 	public void setLicenses(final Set<License> licenses) {
 		this.licenses = licenses;
+	}
+
+	/**
+	 * @return the reservations
+	 */
+	public Set<Reservation> getReservations() {
+		return this.reservations;
+	}
+
+	/**
+	 * @param reservations
+	 *            the reservations to set
+	 */
+	public void setReservations(final Set<Reservation> reservations) {
+		this.reservations = reservations;
 	}
 
 	@Override

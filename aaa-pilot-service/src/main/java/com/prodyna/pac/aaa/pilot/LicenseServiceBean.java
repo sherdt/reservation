@@ -8,9 +8,9 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 
 import com.prodyna.pac.aaa.common.annotation.Monitored;
+import com.prodyna.pac.aaa.common.exceptions.EntitiyNotFoundException;
 
 /**
  * 
@@ -34,12 +34,13 @@ public class LicenseServiceBean implements LicenseService {
 	}
 
 	@Override
-	public License readLicense(final String id) {
-		final TypedQuery<License> namedQuery = this.entityManager.createNamedQuery(
-				PilotNamedQueries.SELECT_LICENSE_BY_ID, License.class);
-		namedQuery.setParameter("id", id);
+	public License readLicense(final String id) throws EntitiyNotFoundException {
+		final License license = this.entityManager.find(License.class, id);
+		if (license == null) {
+			throw new EntitiyNotFoundException("License could not be found for given is [" + id + "]");
+		}
 
-		return namedQuery.getSingleResult();
+		return license;
 	}
 
 	@Override

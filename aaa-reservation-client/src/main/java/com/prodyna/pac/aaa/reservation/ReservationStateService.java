@@ -2,6 +2,8 @@ package com.prodyna.pac.aaa.reservation;
 
 import java.util.List;
 
+import com.prodyna.pac.aaa.common.exceptions.EntitiyNotFoundException;
+
 /**
  * CRUD service interface for {@link ReservationState}.
  * 
@@ -26,8 +28,10 @@ public interface ReservationStateService {
 	 *            Name of the reservation state to read.
 	 * 
 	 * @return Reservation state represented by given name.
+	 * @throws EntitiyNotFoundException
+	 *             If no {@link ReservationState} could be found for given name.
 	 */
-	ReservationState readReservationState(String name);
+	ReservationState readReservationState(String name) throws EntitiyNotFoundException;
 
 	/**
 	 * Retrieves a list of all reservation states.

@@ -9,6 +9,7 @@ import javax.json.JsonObject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +29,7 @@ public class Version {
 	/**
 	 * @return The Version of the reservation application.
 	 */
-	@Produces("application/json")
+	@Produces(MediaType.APPLICATION_JSON)
 	@GET
 	public JsonObject listVersion() {
 		String version = "undefined";

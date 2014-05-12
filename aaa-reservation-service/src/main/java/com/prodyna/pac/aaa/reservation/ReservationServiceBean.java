@@ -9,9 +9,9 @@ import java.util.UUID;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 
 import com.prodyna.pac.aaa.common.annotation.Monitored;
+import com.prodyna.pac.aaa.common.exceptions.EntitiyNotFoundException;
 
 /**
  * Session Bean implementation class ReservationServiceBean for {@link ReservationService}.
@@ -38,12 +38,13 @@ public class ReservationServiceBean implements ReservationService {
 	}
 
 	@Override
-	public Reservation readReservation(final String id) {
-		final TypedQuery<Reservation> namedQuery = this.entityManager.createNamedQuery(
-				ReservationNamedQueries.SELECT_RESERVATION_BY_ID, Reservation.class);
-		namedQuery.setParameter("reservationId", id);
+	public Reservation readReservation(final String id) throws EntitiyNotFoundException {
+		final Reservation reservation = this.entityManager.find(Reservation.class, id);
+		if (reservation == null) {
+			throw new EntitiyNotFoundException("Reservation could not be found for given is [" + id + "]");
+		}
 
-		return namedQuery.getSingleResult();
+		return reservation;
 	}
 
 	@Override

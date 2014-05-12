@@ -3,6 +3,7 @@ package com.prodyna.pac.aaa.aircraft;
 import java.util.List;
 
 import com.prodyna.pac.aaa.common.exceptions.DeleteException;
+import com.prodyna.pac.aaa.common.exceptions.EntitiyNotFoundException;
 
 /**
  * CRUD service interface for the {@link Aircraft}.
@@ -28,8 +29,10 @@ public interface AircraftService {
 	 *            Tail sign to retrieve the aircraft for.
 	 * 
 	 * @return The aircraft represented by given tail sign.
+	 * @throws EntitiyNotFoundException
+	 *             If no {@link Aircraft} could be found for given tail sign.
 	 */
-	Aircraft readAircraft(String tailSign);
+	Aircraft readAircraft(String tailSign) throws EntitiyNotFoundException;
 
 	/**
 	 * Retrieves a list of all aircrafts.

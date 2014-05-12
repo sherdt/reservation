@@ -8,9 +8,9 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 
 import com.prodyna.pac.aaa.common.annotation.Monitored;
+import com.prodyna.pac.aaa.common.exceptions.EntitiyNotFoundException;
 
 /**
  * 
@@ -34,12 +34,13 @@ public class PilotServiceBean implements PilotService {
 	}
 
 	@Override
-	public Pilot readPilot(final String username) {
-		final TypedQuery<Pilot> namedQuery = this.entityManager.createNamedQuery(
-				PilotNamedQueries.SELECT_PILOT_BY_USERNAME, Pilot.class);
-		namedQuery.setParameter("username", username);
+	public Pilot readPilot(final String username) throws EntitiyNotFoundException {
+		final Pilot pilot = this.entityManager.find(Pilot.class, username);
+		if (pilot == null) {
+			throw new EntitiyNotFoundException("Pilot could not be found for given username [" + username + "]");
+		}
 
-		return namedQuery.getSingleResult();
+		return pilot;
 	}
 
 	@Override

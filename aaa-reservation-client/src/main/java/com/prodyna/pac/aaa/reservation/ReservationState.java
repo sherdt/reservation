@@ -20,13 +20,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @XmlRootElement
 @Table(name = "aaa_reservation_state")
-@NamedQueries({
-		@NamedQuery(name = ReservationNamedQueries.SELECT_ALL_RESERVATION_STATES, query = "SELECT rs FROM ReservationState rs"),
-		@NamedQuery(name = ReservationNamedQueries.SELECT_RESERVATION_STATE_BY_NAME, query = "SELECT rs FROM ReservationState rs WHERE rs.name = :reservationStateName") })
+@NamedQueries({ @NamedQuery(name = ReservationNamedQueries.SELECT_ALL_RESERVATION_STATES, query = "SELECT rs FROM ReservationState rs") })
 public class ReservationState implements Serializable {
 
 	/** Generated serial version UID. */
-	private static final long serialVersionUID = -2429551523341366938L;
+	private static final long serialVersionUID = 3680343094703381332L;
 
 	/** Name of the reservation state. */
 	@Id

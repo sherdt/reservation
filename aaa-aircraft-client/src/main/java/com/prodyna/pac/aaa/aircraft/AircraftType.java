@@ -19,9 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @XmlRootElement
 @Table(name = "aaa_aircraft_type")
-@NamedQueries({
-		@NamedQuery(name = AircraftNamedQueries.SELECT_ALL_AIRCRAFT_TYPES, query = "SELECT at FROM AircraftType at"),
-		@NamedQuery(name = AircraftNamedQueries.SELECT_AIRCRAFT_TYPE_BY_NAME, query = "SELECT at FROM AircraftType at WHERE at.name = :aircraftTypeName") })
+@NamedQueries({ @NamedQuery(name = AircraftNamedQueries.SELECT_ALL_AIRCRAFT_TYPES, query = "SELECT at FROM AircraftType at") })
 public class AircraftType implements Serializable {
 
 	/** Generated serial version UID. */

@@ -8,9 +8,9 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 
 import com.prodyna.pac.aaa.common.annotation.Monitored;
+import com.prodyna.pac.aaa.common.exceptions.EntitiyNotFoundException;
 
 /**
  * Session Bean implementation class ReservationStateServiceBean for {@link ReservationStateService}.
@@ -33,12 +33,13 @@ public class ReservationStateServiceBean implements ReservationStateService {
 	}
 
 	@Override
-	public ReservationState readReservationState(final String name) {
-		final TypedQuery<ReservationState> namedQuery = this.entityManager.createNamedQuery(
-				ReservationNamedQueries.SELECT_RESERVATION_STATE_BY_NAME, ReservationState.class);
-		namedQuery.setParameter("reservationStateName", name);
+	public ReservationState readReservationState(final String name) throws EntitiyNotFoundException {
+		final ReservationState reservationState = this.entityManager.find(ReservationState.class, name);
+		if (reservationState == null) {
+			throw new EntitiyNotFoundException("Reservation state could not be found for given username [" + name + "]");
+		}
 
-		return namedQuery.getSingleResult();
+		return reservationState;
 	}
 
 	@Override

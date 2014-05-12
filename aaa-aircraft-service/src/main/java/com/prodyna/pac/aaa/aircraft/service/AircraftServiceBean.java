@@ -5,7 +5,6 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 
 import org.slf4j.Logger;
 
@@ -13,6 +12,7 @@ import com.prodyna.pac.aaa.aircraft.Aircraft;
 import com.prodyna.pac.aaa.aircraft.AircraftNamedQueries;
 import com.prodyna.pac.aaa.aircraft.AircraftService;
 import com.prodyna.pac.aaa.common.annotation.Monitored;
+import com.prodyna.pac.aaa.common.exceptions.EntitiyNotFoundException;
 import com.prodyna.pac.aaa.exceptions.AircraftDeleteException;
 
 /**
@@ -41,12 +41,13 @@ public class AircraftServiceBean implements AircraftService {
 	}
 
 	@Override
-	public Aircraft readAircraft(final String tailSign) {
-		final TypedQuery<Aircraft> namedQuery = this.entityManager.createNamedQuery(
-				AircraftNamedQueries.SELECT_AIRCRAFT_BY_TAIL_SIGN, Aircraft.class);
-		namedQuery.setParameter("tailSign", tailSign);
+	public Aircraft readAircraft(final String tailSign) throws EntitiyNotFoundException {
+		final Aircraft aircraft = this.entityManager.find(Aircraft.class, tailSign);
+		if (aircraft == null) {
+			throw new EntitiyNotFoundException("Aircraft could not be found for given tailSign [" + tailSign + "]");
+		}
 
-		return namedQuery.getSingleResult();
+		return aircraft;
 	}
 
 	@Override
