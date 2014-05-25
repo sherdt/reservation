@@ -36,12 +36,6 @@
 		</dependency>
 		<dependency>
 			<groupId>com.prodyna.pac.reservation</groupId>
-			<artifactId>aaa-loan-service</artifactId>
-			<version>${project.version}</version>
-			<type>ejb</type>
-		</dependency>
-		<dependency>
-			<groupId>com.prodyna.pac.reservation</groupId>
 			<artifactId>aaa-web</artifactId>
 			<version>${project.version}</version>
 			<type>war</type>

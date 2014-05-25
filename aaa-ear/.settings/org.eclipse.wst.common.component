@@ -26,12 +26,6 @@
         <dependent-module archiveName="aaa-pilot-service-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/aaa-pilot-service/aaa-pilot-service">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="aaa-loan-service-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/com/prodyna/pac/reservation/aaa-loan-service/0.0.1-SNAPSHOT/aaa-loan-service-0.0.1-SNAPSHOT.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="aaa-loan-client-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/prodyna/pac/reservation/aaa-loan-client/0.0.1-SNAPSHOT/aaa-loan-client-0.0.1-SNAPSHOT.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="aaa-web-0.0.1-SNAPSHOT.war" deploy-path="/" handle="module:/resource/aaa-web/aaa-web">
             <dependency-type>uses</dependency-type>
         </dependent-module>
