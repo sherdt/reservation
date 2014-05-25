@@ -10,10 +10,8 @@ import org.slf4j.Logger;
 
 import com.prodyna.pac.aaa.aircraft.Aircraft;
 import com.prodyna.pac.aaa.aircraft.AircraftNamedQueries;
-import com.prodyna.pac.aaa.aircraft.AircraftService;
 import com.prodyna.pac.aaa.common.annotation.Monitored;
-import com.prodyna.pac.aaa.common.exceptions.EntitiyNotFoundException;
-import com.prodyna.pac.aaa.exceptions.AircraftDeleteException;
+import com.prodyna.pac.aaa.common.exception.EntityNotFoundException;
 
 /**
  * Session Bean implementation class AircraftServiceBean for {@link AircraftService}.
@@ -41,10 +39,10 @@ public class AircraftServiceBean implements AircraftService {
 	}
 
 	@Override
-	public Aircraft readAircraft(final String tailSign) throws EntitiyNotFoundException {
+	public Aircraft readAircraft(final String tailSign) throws EntityNotFoundException {
 		final Aircraft aircraft = this.entityManager.find(Aircraft.class, tailSign);
 		if (aircraft == null) {
-			throw new EntitiyNotFoundException("Aircraft could not be found for given tailSign [" + tailSign + "]");
+			throw new EntityNotFoundException("Aircraft could not be found for given tailSign [" + tailSign + "]");
 		}
 
 		return aircraft;
@@ -63,7 +61,7 @@ public class AircraftServiceBean implements AircraftService {
 	}
 
 	@Override
-	public void deleteAircraft(final String name) throws AircraftDeleteException {
+	public void deleteAircraft(final String name) {
 		final Aircraft aircraft = this.entityManager.find(Aircraft.class, name);
 		this.entityManager.remove(aircraft);
 	}

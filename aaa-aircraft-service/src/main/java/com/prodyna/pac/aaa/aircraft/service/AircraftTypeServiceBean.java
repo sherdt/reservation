@@ -8,9 +8,8 @@ import javax.persistence.EntityManager;
 
 import com.prodyna.pac.aaa.aircraft.AircraftNamedQueries;
 import com.prodyna.pac.aaa.aircraft.AircraftType;
-import com.prodyna.pac.aaa.aircraft.AircraftTypeService;
 import com.prodyna.pac.aaa.common.annotation.Monitored;
-import com.prodyna.pac.aaa.common.exceptions.EntitiyNotFoundException;
+import com.prodyna.pac.aaa.common.exception.EntityNotFoundException;
 
 /**
  * Session Bean implementation class AircraftTypeServiceBean for {@link AircraftTypeService}.
@@ -33,10 +32,10 @@ public class AircraftTypeServiceBean implements AircraftTypeService {
 	}
 
 	@Override
-	public AircraftType readAircraftType(final String name) throws EntitiyNotFoundException {
+	public AircraftType readAircraftType(final String name) throws EntityNotFoundException {
 		final AircraftType aircraftType = this.entityManager.find(AircraftType.class, name);
 		if (aircraftType == null) {
-			throw new EntitiyNotFoundException("Aircraft type could not be found for given name [" + name + "]");
+			throw new EntityNotFoundException("Aircraft type could not be found for given name [" + name + "]");
 		}
 
 		return aircraftType;

@@ -11,11 +11,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.prodyna.pac.aaa.aircraft.Aircraft;
-import com.prodyna.pac.aaa.aircraft.AircraftService;
 import com.prodyna.pac.aaa.aircraft.AircraftType;
-import com.prodyna.pac.aaa.aircraft.AircraftTypeService;
-import com.prodyna.pac.aaa.common.exceptions.AircraftAllocationAppException;
-import com.prodyna.pac.aaa.common.exceptions.DeleteException;
+import com.prodyna.pac.aaa.aircraft.service.AircraftService;
+import com.prodyna.pac.aaa.aircraft.service.AircraftTypeService;
+import com.prodyna.pac.aaa.common.exception.AircraftAllocationAppException;
+import com.prodyna.pac.aaa.common.exception.DeleteException;
 
 /**
  * Tests for {@link AircraftTypeService} and {@link AircraftService}.

@@ -15,6 +15,11 @@
 			<artifactId>aaa-aircraft-client</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.reservation</groupId>
+			<artifactId>aaa-pilot-client</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

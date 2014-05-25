@@ -15,7 +15,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.prodyna.pac.aaa.aircraft.AircraftType;
-import com.prodyna.pac.aaa.aircraft.AircraftTypeService;
+import com.prodyna.pac.aaa.aircraft.service.AircraftTypeService;
 import com.prodyna.pac.aaa.pilot.License;
 import com.prodyna.pac.aaa.pilot.LicenseService;
 

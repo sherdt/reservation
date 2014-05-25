@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Entity representing the state of an reservation. The name of the reservation state has to be unique. Possible values
- * could be <code>RESERVED</code>, <code>CANCELED</code>, ... but it's totally up to the administrator to create
+ * could be <code>RESERVED</code>, <code>CANCELLED</code>, ... but it's totally up to the administrator to create
  * reservation states and define its names.
  * 
  * @author Sergej Herdt, PRODYNA AG
@@ -40,7 +40,7 @@ public class ReservationState implements Serializable {
 	 * Constructor setting the name.
 	 * 
 	 * @param name
-	 *            Reservation state e.g. <code>CANCELED</code>
+	 *            Reservation state e.g. <code>CANCELLED</code>
 	 */
 	public ReservationState(final String name) {
 		this.name = name;

@@ -123,8 +123,6 @@
 		<module>aaa-distribution</module>
 		<module>aaa-pilot-client</module>
 		<module>aaa-pilot-service</module>
-		<module>aaa-loan-client</module>
-		<module>aaa-loan-service</module>
 	</modules>
 	<url>https://github.com/sherdt/reservation</url>
 	<organization>

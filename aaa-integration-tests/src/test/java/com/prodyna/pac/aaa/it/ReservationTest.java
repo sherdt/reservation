@@ -15,14 +15,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.prodyna.pac.aaa.aircraft.Aircraft;
-import com.prodyna.pac.aaa.aircraft.AircraftService;
 import com.prodyna.pac.aaa.aircraft.AircraftType;
-import com.prodyna.pac.aaa.aircraft.AircraftTypeService;
-import com.prodyna.pac.aaa.common.exceptions.EntitiyNotFoundException;
+import com.prodyna.pac.aaa.aircraft.service.AircraftService;
+import com.prodyna.pac.aaa.aircraft.service.AircraftTypeService;
+import com.prodyna.pac.aaa.common.exception.EntityNotFoundException;
 import com.prodyna.pac.aaa.reservation.Reservation;
-import com.prodyna.pac.aaa.reservation.ReservationService;
 import com.prodyna.pac.aaa.reservation.ReservationState;
-import com.prodyna.pac.aaa.reservation.ReservationStateService;
+import com.prodyna.pac.aaa.reservation.service.ReservationService;
+import com.prodyna.pac.aaa.reservation.service.ReservationStateService;
 
 /**
  * Tests for {@link ReservationStateService}.
@@ -68,12 +68,12 @@ public class ReservationTest {
 	/**
 	 * Tests all methods of the CRUD service for {@link ReservationStateService}.
 	 * 
-	 * @throws EntitiyNotFoundException
+	 * @throws EntityNotFoundException
 	 *             Should not be thrown in this test.
 	 * 
 	 */
 	@Test
-	public void reservationStateCrudServiceIntegrationTest() throws EntitiyNotFoundException {
+	public void reservationStateCrudServiceIntegrationTest() throws EntityNotFoundException {
 
 		Assert.assertEquals(0, this.reservationStateService.readReservationStates().size());
 
@@ -102,12 +102,12 @@ public class ReservationTest {
 	/**
 	 * Tests all methods of the CRUD service for {@link ReservationService}.
 	 * 
-	 * @throws EntitiyNotFoundException
+	 * @throws EntityNotFoundException
 	 *             Should not be thrown in this test.
 	 * 
 	 */
 	@Test
-	public void reservationCrudServiceIntegrationTest() throws EntitiyNotFoundException {
+	public void reservationCrudServiceIntegrationTest() throws EntityNotFoundException {
 		Assert.assertEquals(0, this.reservationService.readReservations().size());
 
 		final Calendar calendar = Calendar.getInstance();
