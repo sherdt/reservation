@@ -9,6 +9,8 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import com.prodyna.pac.aaa.auth.AuthenticationSecured;
+import com.prodyna.pac.aaa.auth.Role;
 import com.prodyna.pac.aaa.common.annotation.Monitored;
 import com.prodyna.pac.aaa.common.exception.EntityNotFoundException;
 import com.prodyna.pac.aaa.pilot.Pilot;
@@ -31,6 +33,7 @@ public class PilotServiceBean implements PilotService {
 	private EntityManager entityManager;
 
 	@Override
+	@AuthenticationSecured(role = Role.ADMIN)
 	public Pilot createPilot(final Pilot Pilot) {
 		this.entityManager.persist(Pilot);
 		return Pilot;
@@ -52,11 +55,13 @@ public class PilotServiceBean implements PilotService {
 	}
 
 	@Override
+	@AuthenticationSecured(role = Role.ADMIN)
 	public Pilot updatePilot(final Pilot Pilot) {
 		return this.entityManager.merge(Pilot);
 	}
 
 	@Override
+	@AuthenticationSecured(role = Role.ADMIN)
 	public void deletePilot(final String username) {
 		final Pilot pilot = this.entityManager.find(Pilot.class, username);
 		this.entityManager.remove(pilot);

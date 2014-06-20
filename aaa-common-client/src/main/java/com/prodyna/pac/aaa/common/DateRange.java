@@ -53,7 +53,6 @@ public class DateRange implements Serializable {
 	 */
 	public void setStartDate(final Date startDate) {
 		this.startDate = new Date(startDate.getTime());
-		;
 	}
 
 	/**

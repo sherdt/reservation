@@ -6,19 +6,24 @@
 		<artifactId>aaa</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>aaa-pilot-service</artifactId>
+	<artifactId>aaa-authentication-service</artifactId>
 	<packaging>ejb</packaging>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.prodyna.pac.reservation</groupId>
+			<artifactId>aaa-authentication-client</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>com.prodyna.pac.reservation</groupId>
 			<artifactId>aaa-pilot-client</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.prodyna.pac.reservation</groupId>
-			<artifactId>aaa-authentication-client</artifactId>
-			<version>${project.version}</version>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.9</version>
 		</dependency>
 	</dependencies>
 	<build>

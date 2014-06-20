@@ -13,6 +13,8 @@ import javax.ws.rs.core.MediaType;
 
 import org.slf4j.Logger;
 
+import com.prodyna.pac.aaa.auth.AuthenticationSecured;
+import com.prodyna.pac.aaa.auth.Role;
 import com.prodyna.pac.aaa.common.exception.EntityNotFoundException;
 import com.prodyna.pac.aaa.common.exception.ResponseStatusConstants;
 import com.prodyna.pac.aaa.pilot.Pilot;
@@ -28,6 +30,7 @@ import com.prodyna.pac.aaa.pilot.exception.PilotInvalidException;
 @Path("pilot")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
+@AuthenticationSecured(role = Role.PILOT)
 public class PilotRESTService {
 
 	/** Logger for this class. */
@@ -60,6 +63,7 @@ public class PilotRESTService {
 	 */
 	@POST
 	@Path("/")
+	@AuthenticationSecured(role = Role.ADMIN)
 	public Pilot createPilot(final Pilot pilot) {
 
 		// check if user name is set
@@ -96,6 +100,7 @@ public class PilotRESTService {
 	 */
 	@DELETE
 	@Path("/")
+	@AuthenticationSecured(role = Role.ADMIN)
 	public Pilot deletePilot(final Pilot pilot) {
 
 		// check if user name is set

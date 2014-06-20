@@ -15,11 +15,11 @@ import org.slf4j.Logger;
 
 import com.prodyna.pac.aaa.aircraft.Aircraft;
 import com.prodyna.pac.aaa.aircraft.AircraftType;
+import com.prodyna.pac.aaa.aircraft.exception.AircraftTypeInvalidException;
 import com.prodyna.pac.aaa.aircraft.service.AircraftService;
 import com.prodyna.pac.aaa.aircraft.service.AircraftTypeService;
 import com.prodyna.pac.aaa.common.exception.EntityNotFoundException;
 import com.prodyna.pac.aaa.common.exception.ResponseStatusConstants;
-import com.prodyna.pac.aaa.exception.AircraftTypeInvalidException;
 import com.prodyna.pac.aaa.pilot.License;
 import com.prodyna.pac.aaa.pilot.LicenseService;
 

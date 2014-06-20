@@ -24,6 +24,12 @@
 		</dependency>
 		<dependency>
 			<groupId>com.prodyna.pac.reservation</groupId>
+			<artifactId>aaa-authentication-service</artifactId>
+			<version>${project.version}</version>
+			<type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.reservation</groupId>
 			<artifactId>aaa-reservation-service</artifactId>
 			<version>${project.version}</version>
 			<type>ejb</type>

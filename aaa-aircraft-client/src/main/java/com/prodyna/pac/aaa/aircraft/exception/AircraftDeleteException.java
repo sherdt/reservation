@@ -1,4 +1,4 @@
-package com.prodyna.pac.aaa.exception;
+package com.prodyna.pac.aaa.aircraft.exception;
 
 import com.prodyna.pac.aaa.common.exception.DeleteException;
 

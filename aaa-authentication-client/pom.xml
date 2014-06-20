@@ -5,10 +5,13 @@
     <artifactId>aaa</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>aaa-aircraft</artifactId>
-  <packaging>pom</packaging>
-  <modules>
-  	<module>../aaa-aircraft-client</module>
-  	<module>../aaa-aircraft-service</module>
-  </modules>
+  <artifactId>aaa-authentication-client</artifactId>
+  
+  <dependencies>
+  	<dependency>
+  		<groupId>com.prodyna.pac.reservation</groupId>
+  		<artifactId>aaa-common-client</artifactId>
+  		<version>${project.version}</version>
+  	</dependency>
+  </dependencies>
 </project>

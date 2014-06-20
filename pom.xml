@@ -15,6 +15,13 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.jboss.spec</groupId>
+			<artifactId>jboss-javaee-7.0</artifactId>
+			<version>1.0.0.Final</version>
+			<type>pom</type>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>1.7.2</version>
@@ -115,14 +122,18 @@
 	<modules>
 		<module>aaa-common-client</module>
 		<module>aaa-common-service</module>
-		<module>aaa-aircraft</module>
-		<module>aaa-reservation</module>
+		<module>aaa-aircraft-client</module>
+		<module>aaa-aircraft-service</module>
+		<module>aaa-reservation-client</module>
+		<module>aaa-reservation-service</module>
 		<module>aaa-web</module>
 		<module>aaa-ear</module>
 		<module>aaa-integration-tests</module>
 		<module>aaa-distribution</module>
 		<module>aaa-pilot-client</module>
 		<module>aaa-pilot-service</module>
+		<module>aaa-authentication-client</module>
+		<module>aaa-authentication-service</module>
 	</modules>
 	<url>https://github.com/sherdt/reservation</url>
 	<organization>

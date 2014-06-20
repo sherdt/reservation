@@ -17,4 +17,7 @@ public interface ResponseStatusConstants {
 	/** Status code for resource invalid exception. */
 	int RESOURCE_INVALID = 400;
 
+	/** Status code for not authorized exception. */
+	int UNAUTHORIZED = 401;
+
 }
