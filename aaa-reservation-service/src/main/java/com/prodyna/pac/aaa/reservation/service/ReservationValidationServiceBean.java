@@ -45,6 +45,22 @@ public class ReservationValidationServiceBean implements ReservationValidationSe
 			throw new ResourceInvalidException("Reservation id cannot be empty, please provide a generated id.");
 		}
 
+		if (reservation.getStartDate() == null) {
+			throw new ResourceInvalidException("The start date of a reservation has to be set.");
+		}
+
+		if (reservation.getEndDate() == null) {
+			throw new ResourceInvalidException("The end date of a reservation has to be set.");
+		}
+
+		if (reservation.getStartDate().after(reservation.getEndDate())) {
+			throw new ResourceInvalidException("The start date of a reservation can not be after the end date.");
+		}
+
+		if (reservation.getStartDate().getTime() < System.currentTimeMillis()) {
+			throw new ResourceInvalidException("The start date of a reservation may not be in the past.");
+		}
+
 		try {
 			this.reservationService.readReservation(id);
 			throw new ResourceInvalidException("Reservation with id '" + id

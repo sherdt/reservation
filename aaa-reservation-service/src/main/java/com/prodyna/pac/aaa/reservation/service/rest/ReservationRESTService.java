@@ -214,13 +214,27 @@ public class ReservationRESTService {
 				throw new ReservationInvalidException(e.getMessage(), e, ResponseStatusConstants.RESOURCE_INVALID);
 			}
 
-			// TODO: check if the aircraft can be reserved at that specific time
-
-			// TODO: check if user already has a reservation at that specific time
-
 			// get all reservations for given pilot
 			final Pilot pilot = this.pilotService.readPilot(username);
 			final Set<Reservation> reservations = pilot.getReservations();
+
+			final List<Reservation> allReservations = this.reservationService.readReservations();
+
+			// check if user already has a reservation at that specific time
+			for (final Reservation pilotsReservation : reservations) {
+				this.checkTimeRangeOverlapping(reservation, pilotsReservation,
+						"You are not allowed to reserve more than one aircraft at the same time.");
+			}
+
+			// checks if the aircraft can be reserved at that specific time
+			for (final Reservation aReservation : allReservations) {
+
+				// check only reservations for same aircraft
+				if (aReservation.getAircraft().equals(reservation.getAircraft())) {
+					this.checkTimeRangeOverlapping(reservation, aReservation,
+							"This aircraft is already reserved. Please choose a different aircraft or another time slot.");
+				}
+			}
 
 			// create new reservation
 			createdReservation = this.reservationService.createReservation(reservation);
@@ -244,6 +258,32 @@ public class ReservationRESTService {
 	}
 
 	/**
+	 * Checks if the date ranges for given reservations are overlapping each other. The check is only performed if the
+	 * second reservation is already in status RESERVED.
+	 * 
+	 * @param firstReservation
+	 *            First reservation to get the start and end date from.
+	 * @param secondReservation
+	 *            Second reservation to get the start and end date from.
+	 * @param errorMessage
+	 *            The message to use for throwing the ReservationInvalidException.
+	 * 
+	 * @throws ReservationInvalidException
+	 *             If the ranges of given reservations are overlapping each other.
+	 */
+	private void checkTimeRangeOverlapping(final Reservation firstReservation, final Reservation secondReservation,
+			final String errorMessage) {
+
+		final String reservationState = secondReservation.getReservationState().getName();
+		if ("RESERVED".equals(reservationState)
+				&& secondReservation.getStartDate().getTime() < firstReservation.getEndDate().getTime()
+				&& firstReservation.getStartDate().getTime() < secondReservation.getEndDate().getTime()) {
+
+			throw new ReservationInvalidException(errorMessage, ResponseStatusConstants.RESOURCE_INVALID);
+		}
+	}
+
+	/**
 	 * Cancels given reservation.
 	 * 
 	 * @param username
@@ -256,21 +296,33 @@ public class ReservationRESTService {
 	@DELETE
 	@Path("{username}")
 	public Reservation cancelReservation(@PathParam("username") final String username, final Reservation reservation) {
-		// TODO: implement check: pilot only is allowed to cancel his own reservation
-
-		Reservation readReservation;
+		Reservation storedReservation;
 		try {
-			readReservation = this.reservationService.readReservation(reservation.getId());
+			storedReservation = this.reservationService.readReservation(reservation.getId());
 		} catch (final EntityNotFoundException e) {
 			throw new ReservationInvalidException("You tried to cancel an reservation which doesn't exist.",
 					ResponseStatusConstants.RESOURCE_INVALID);
 		}
 
+		final Pilot pilot;
+		try {
+			pilot = this.pilotService.readPilot(username);
+		} catch (final EntityNotFoundException e) {
+			throw new ReservationInvalidException("No pilot could be found for given user name '" + username + "'.", e,
+					ResponseStatusConstants.RESOURCE_INVALID);
+		}
+
+		// check if the user is trying to cancel foreign reservation, this is not allowed
+		if (!pilot.getReservations().contains(reservation)) {
+			throw new ReservationInvalidException("You are not allowed to cancel foreign reservations.",
+					ResponseStatusConstants.RESOURCE_INVALID);
+		}
+
 		Reservation updatedReservation;
-		final ReservationState reservationState = readReservation.getReservationState();
+		final ReservationState reservationState = storedReservation.getReservationState();
 		if ("RESERVED".equals(reservationState.getName())) {
-			readReservation.setReservationState(this.readOrCreateReservationState("CANCELLED"));
-			updatedReservation = this.reservationService.updateReservation(readReservation);
+			storedReservation.setReservationState(this.readOrCreateReservationState("CANCELLED"));
+			updatedReservation = this.reservationService.updateReservation(storedReservation);
 		} else {
 			throw new ReservationInvalidException("You are not allowed to cancel this reservation, it's not reserved.",
 					ResponseStatusConstants.RESOURCE_INVALID);
