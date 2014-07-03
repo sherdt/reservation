@@ -1,0 +1,19 @@
+body {
+	padding-top: 5em;
+}
+
+/* .ng-invalid.ng-dirty { */
+/* 	border-color: #FA787E; */
+/* } */
+
+/* .ng-valid.ng-dirty { */
+/* 	border-color: #78FA89; */
+/* } */
+.aaa.navbar-form.navbar-right {
+	margin-top: 0px !important;
+	margin-bottom: 0px !important;
+}
+
+.aaa.navbar-form.navbar-right a.btn {
+		margin-top:8px!important;
+}

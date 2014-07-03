@@ -26,6 +26,21 @@
         <dependent-module archiveName="commons-codec-1.9.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-codec/commons-codec/1.9/commons-codec-1.9.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="nimbus-jose-jwt-2.22.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/nimbusds/nimbus-jose-jwt/2.22.1/nimbus-jose-jwt-2.22.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="jcip-annotations-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/net/jcip/jcip-annotations/1.0/jcip-annotations-1.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="json-smart-1.1.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/net/minidev/json-smart/1.1.1/json-smart-1.1.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="mail-1.4.7.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/mail/mail/1.4.7/mail-1.4.7.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="bcprov-jdk15on-1.49.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/bouncycastle/bcprov-jdk15on/1.49/bcprov-jdk15on-1.49.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="aaa-reservation-service-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/aaa-reservation-service/aaa-reservation-service">
             <dependency-type>uses</dependency-type>
         </dependent-module>
@@ -36,6 +51,9 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="aaa-web-0.0.1-SNAPSHOT.war" deploy-path="/" handle="module:/resource/aaa-web/aaa-web">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="activation-1.1.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/activation/activation/1.1.1/activation-1.1.1.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
     </wb-module>

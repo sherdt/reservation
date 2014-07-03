@@ -71,7 +71,7 @@ public class SecurityInterceptor {
 			}
 		}
 		case PILOT: {
-			this.logger.debug("The method [{}.{}] requires the pilot role, check if used is logged in.", ctx
+			this.logger.debug("The method [{}.{}] requires the pilot role, check if user is logged in.", ctx
 					.getTarget().getClass().getName(), ctx.getMethod().getName());
 
 			if (this.credentials.getUsername() == null) {

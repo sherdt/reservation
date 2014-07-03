@@ -1,0 +1,23 @@
+<div ng-show="tab.isSet(2) && authCtrl.isAdmin">
+	<div>
+		<div ng-hide="pilotCtrl.pilots.length">
+			<div class="alert alert-info"><strong>No pilots available</strong></div>
+		</div>		
+		<blockquote  ng-repeat="pilot in pilotCtrl.pilots"
+				     ng-mouseenter="hover = true"
+				     ng-mouseleave="hover = false"
+				     ng-class="{'btn-default':hover}">
+			<div class="pull-right" ng-show="hover">
+				<a ng-click="pilotCtrl.deletePilot(pilot)" ng-confirm-click="Do you really want to delete this pilot?" class="btn btn-danger glyphicon glyphicon-remove"></a>
+			</div>
+				<p>{{pilot.username}} ({{pilot.email}})</p>
+			<p>{{pilot.name}}</p>
+		</blockquote>
+		
+		<div>
+			<a class="btn btn-info" data-toggle="modal" data-target="#createPilotDialog">Create new pilot</a>
+		</div>
+	</div>
+</div>
+
+<create-pilot></create-pilot>

@@ -55,7 +55,7 @@ public class PilotServiceBean implements PilotService {
 	}
 
 	@Override
-	@AuthenticationSecured(role = Role.ADMIN)
+	@AuthenticationSecured(role = Role.PILOT)
 	public Pilot updatePilot(final Pilot Pilot) {
 		return this.entityManager.merge(Pilot);
 	}

@@ -1,8 +1,5 @@
 package com.prodyna.pac.aaa.auth;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
-
 /**
  * A request scoped inject-able bean that contains the credentials. It will be written by a JAX-RS specific Interceptor
  * on each request.
@@ -11,15 +8,16 @@ import javax.inject.Named;
  * @author Sergej Herdt, PRODYNA AG
  * 
  */
-@Named
-@RequestScoped
-public class Credentials {
+public class CredentialsChange {
 
 	/** User name part of the credentials. */
 	private String username;
 
 	/** Password part of the credentials. */
 	private String password;
+
+	/** New password. */
+	private String newPassword;
 
 	/**
 	 * @return the username
@@ -49,6 +47,21 @@ public class Credentials {
 	 */
 	public void setPassword(final String password) {
 		this.password = password;
+	}
+
+	/**
+	 * @return the newPassword
+	 */
+	public String getNewPassword() {
+		return this.newPassword;
+	}
+
+	/**
+	 * @param newPassword
+	 *            the newPassword to set
+	 */
+	public void setNewPassword(final String newPassword) {
+		this.newPassword = newPassword;
 	}
 
 	@Override
