@@ -21,14 +21,25 @@ function url_base64_decode(str) {
 }
 
 angular.module('aircraftAllocationApp.controllers', [])
-  .controller('PanelController', ['$scope', function($scope) {
-	  this.tab = 2;
+  .controller('PanelController', ['$http', '$scope', function($http, $scope) {
+	  this.tab = 4;
 	  this.setTab = function(selectedTab) {
 		  this.tab = selectedTab;
 	  };
 	  this.isSet = function(tab) {
 		  return this.tab === tab;
 	  };
+	  
+	  $http
+		.get('/aaa-web/rest-api/version')
+		.success(function (data, status, headers, config) {
+			$scope.version = data.version;
+		})
+		.error(function (data, status, headers, config) {
+			// handle read software version errors here
+			console.log('ERROR (' + status + '): ' + data);
+		});
+	  
   }])
   .controller('AuthenticationController', ['$http', '$scope', '$window', function($http, $scope, $window) {
 	  this.profile = JSON.parse($window.sessionStorage.profile || '{}');
@@ -56,6 +67,7 @@ angular.module('aircraftAllocationApp.controllers', [])
 				
 				// handle change password errors here
 				$window.sessionStorage.message = data;
+				$scope.credentialsChange = {};
 				console.log("ERROR: " + $window.sessionStorage.message);
 			});
 	  };

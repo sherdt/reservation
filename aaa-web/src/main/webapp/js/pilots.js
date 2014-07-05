@@ -7,8 +7,9 @@
 	app.directive("pilots", function() {
 		return {
 			restrict : 'E',
-			templateUrl : "partials/pilots.html",
+			templateUrl : "views/pilots.html",
 			controller : function($http) {
+				console.log('Initializing the pilotCtrl.');
 				this.pilots = [];
 				var store = this;
 				
@@ -42,18 +43,18 @@
 	app.directive("createPilot", function() {
 		return {
 			restrict : 'E',
-			templateUrl : "partials/createPilot.html",
+			templateUrl : "views/createPilot.html",
 			controller : function($http, $scope) {
+				console.log('Initializing the createPilotCtrl.');
 				this.pilot = {};
 				var store = this;
 				store.errorMessage = '';
 
 				this.createPilot = function(){
-					// set default password to 'changeit'
-					store.pilot.password = '$1$aaa$X9IIyn1EGtKsXyvzxK0cp.';
 					$http({method: 'POST', url: '/aaa-web/rest-api/pilot/', data : store.pilot, headers : {'Content-Type' : 'application/json;charset=utf-8'}})
 					.success(function(data) {
 						$('#createPilotDialog').modal('hide');
+						store.pilot = {};
 						$scope.pilotCtrl.listPilots();
 					})
 					.error(function(data) {

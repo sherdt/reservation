@@ -1,0 +1,23 @@
+<div ng-show="tab.isSet(3) && authCtrl.isAdmin">
+	<div>
+		<div ng-hide="aircraftCtrl.aircrafts.length">
+			<div class="alert alert-info"><strong>No aircrafts available</strong></div>
+		</div>		
+		<blockquote ng-repeat="aircraft in aircraftCtrl.aircrafts"
+					ng-mouseenter="hover = true"
+				    ng-mouseleave="hover = false"
+				    ng-class="{'btn-default':hover}">
+		    <div class="pull-right" ng-show="hover">
+				<a ng-click="aircraftCtrl.deleteAircraft(aircraft)" class="btn btn-danger glyphicon glyphicon-remove"></a>
+			</div>
+			<p>Tail sign: {{aircraft.tailSign}}</p>
+			<p>Type: {{aircraft.aircraftType.name}}</p>
+		</blockquote>
+		
+		<div>
+			<a ng-click="aircraftCtrl.updateAircraftTypes()" class="btn btn-info" data-toggle="modal" data-target="#createAircraftDialog">Create new aircraft</a>
+		</div>
+	</div>
+</div>
+
+<create-aircraft></create-aircraft>

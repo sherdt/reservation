@@ -1,0 +1,31 @@
+<div class="modal fade" id="createAircraftDialog" tabindex="-1" role="dialog"
+	aria-labelledby="aircraftDialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Create new aircraft</h4>
+			</div>
+			<form role="form" name="aircraftForm" ng-submit="aircraftForm.$valid && createAircraftCtrl.createAircraft()" novalidate>
+				<div class="modal-body" ng-show="aircraftCtrl.aircraftTypes.length == 0">
+					<div class="form-group">
+						<label>No aircraft type found, please create one first.</label>
+					</div>
+				</div>
+				<div class="modal-body" ng-hide="aircraftCtrl.aircraftTypes.length == 0">
+					<div class="form-group">
+						<label for="tailSign">Tail sign</label>
+						<input ng-model="createAircraftCtrl.aircraft.tailSign" type="text" class="form-control" id="tailSign" placeholder="Enter the tail sign" required>
+					</div>
+					<div class="form-group">
+						<label for="aircaftType">Aircraft type</label>
+						<select ng-model="createAircraftCtrl.aircraft.aircraftType" ng-options="aircraftType.name for aircraftType in aircraftCtrl.aircraftTypes" class="form-control" required></select>
+					</div>
+				</div>
+				<div class="modal-footer" ng-hide="aircraftCtrl.aircraftTypes.length == 0">
+					<input type="submit" class="btn btn-primary" ng-class="{'disabled':aircraftForm.$invalid}" value="Create" />
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

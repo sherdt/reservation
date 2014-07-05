@@ -2,8 +2,15 @@
 
 /* Services */
 
+var baseUrl = '/aaa-web/rest-api/';
 
-// Demonstrate how to register services
-// In this case it is a simple value service.
-angular.module('aircraftAllocationApp.services', []).
-  value('version', '0.1');
+angular.module('aircraftAllocationApp')
+.factory('aircraftTypeService', [ '$resource', function($resource) {
+	return $resource(baseUrl + '/aircraft-type/:userId', {
+		userId : '@id'
+	}, {
+		update : {
+			method : 'PUT'
+		}
+	});
+} ]);

@@ -34,9 +34,12 @@ public class PilotServiceBean implements PilotService {
 
 	@Override
 	@AuthenticationSecured(role = Role.ADMIN)
-	public Pilot createPilot(final Pilot Pilot) {
-		this.entityManager.persist(Pilot);
-		return Pilot;
+	public Pilot createPilot(final Pilot pilot) {
+
+		// set default password to 'changeit'
+		pilot.setPassword("$1$aaa$X9IIyn1EGtKsXyvzxK0cp.");
+		this.entityManager.persist(pilot);
+		return pilot;
 	}
 
 	@Override
@@ -56,8 +59,8 @@ public class PilotServiceBean implements PilotService {
 
 	@Override
 	@AuthenticationSecured(role = Role.PILOT)
-	public Pilot updatePilot(final Pilot Pilot) {
-		return this.entityManager.merge(Pilot);
+	public Pilot updatePilot(final Pilot pilot) {
+		return this.entityManager.merge(pilot);
 	}
 
 	@Override
