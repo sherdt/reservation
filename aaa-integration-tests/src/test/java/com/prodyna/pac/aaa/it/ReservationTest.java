@@ -56,7 +56,7 @@ public class ReservationTest {
 	 */
 	@Deployment
 	public static WebArchive createDeployment() {
-		final WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "test.war");
+		final WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "test-reservation.war");
 		webArchive.addPackages(true, "com.prodyna.pac.aaa");
 		webArchive.addAsResource("persistence.xml", "META-INF/persistence.xml");
 		webArchive.addAsResource("beans.xml", "META-INF/beans.xml");
