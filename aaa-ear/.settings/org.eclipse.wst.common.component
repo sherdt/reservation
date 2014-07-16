@@ -17,10 +17,10 @@
         <dependent-module archiveName="aaa-pilot-client-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/aaa-pilot-client/aaa-pilot-client">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="aaa-authentication-service-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/aaa-authentication-service/aaa-authentication-service">
+        <dependent-module archiveName="aaa-authentication-client-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/aaa-authentication-client/aaa-authentication-client">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="aaa-authentication-client-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/aaa-authentication-client/aaa-authentication-client">
+        <dependent-module archiveName="aaa-authentication-service-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/aaa-authentication-service/aaa-authentication-service">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="commons-codec-1.9.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-codec/commons-codec/1.9/commons-codec-1.9.jar">

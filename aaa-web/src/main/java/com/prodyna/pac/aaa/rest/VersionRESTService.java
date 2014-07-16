@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * @author Sergej Herdt, PRODYNA AG
  * 
  */
-@Path("version")
+@Path("/version")
 public class VersionRESTService {
 
 	/** Logger for this class. */

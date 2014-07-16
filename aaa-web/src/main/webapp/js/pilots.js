@@ -14,7 +14,7 @@
 				var store = this;
 				
 				this.deletePilot = function(pilot){
-					$http({method: 'DELETE', url: '/aaa-web/rest-api/pilot/' + pilot.username, data : pilot, headers : {'Content-Type' : 'application/json;charset=utf-8'}})
+					$http({method: 'DELETE', url: '/aaa-web/rest-api/pilot/' + pilot.username, headers : {'Content-Type' : 'application/json;charset=utf-8'}})
 					.success(function(data) {
 						store.listPilots();
 					})
@@ -102,10 +102,10 @@
 				
 				this.deleteLicense = function(pilot, license){
 					
-					$http({method: 'DELETE', url: '/aaa-web/rest-api/pilot/' + pilot.username + '/delete-license/', data : license, headers : {'Content-Type' : 'application/json;charset=utf-8'}})
+					$http({method: 'DELETE', url: '/aaa-web/rest-api/pilot/' + pilot.username + '/delete-license/' + license.id, headers : {'Content-Type' : 'application/json;charset=utf-8'}})
 					.success(function(data) {
 						
-						$http({method: 'DELETE', url: '/aaa-web/rest-api/license/' + license.id, data : license, headers : {'Content-Type' : 'application/json;charset=utf-8'}})
+						$http({method: 'DELETE', url: '/aaa-web/rest-api/license/' + license.id, headers : {'Content-Type' : 'application/json;charset=utf-8'}})
 						.success(function(createdLicense) {
 							store.license = {};
 							$scope.pilotCtrl.listPilots();

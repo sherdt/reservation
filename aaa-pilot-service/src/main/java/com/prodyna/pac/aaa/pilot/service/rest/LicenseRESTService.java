@@ -7,6 +7,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -29,7 +30,7 @@ import com.prodyna.pac.aaa.pilot.exception.PilotInvalidException;
  * @author Sergej Herdt, PRODYNA AG
  * 
  */
-@Path("license")
+@Path("/license")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Monitored
@@ -89,35 +90,31 @@ public class LicenseRESTService {
 	/**
 	 * Deletes a license.
 	 * 
-	 * @param license
-	 *            The license to delete.
-	 * @return Given license.
+	 * @param licenseId
+	 *            The Id of the license to delete.
 	 * 
 	 * @throws LicenseInvalidException
 	 *             If the license doesn't exist.
 	 */
 	@DELETE
-	@Path("/{id}")
+	@Path("/{licenseId}")
 	@AuthenticationSecured(role = Role.ADMIN)
-	public License deleteLicense(final License license) {
+	public void deleteLicense(@PathParam("licenseId") final String licenseId) {
 
 		// check if id is set
-		final String id = license.getId();
-		if (id == null || "".equals(id)) {
+		if (licenseId == null || "".equals(licenseId)) {
 			throw new LicenseInvalidException("Could not delete the license without an id.",
 					ResponseStatusConstants.RESOURCE_INVALID);
 		}
 
 		// check if the license really exists
 		try {
-			this.licenseService.readLicense(id);
+			this.licenseService.readLicense(licenseId);
 		} catch (final EntityNotFoundException e) {
-			throw new PilotInvalidException("Could not delete the license, the license with the id '" + id
+			throw new PilotInvalidException("Could not delete the license, the license with the id '" + licenseId
 					+ "' doesn't exist.", ResponseStatusConstants.RESOURCE_NOT_FOUND);
 		}
 
-		this.licenseService.deleteLicense(id);
-
-		return license;
+		this.licenseService.deleteLicense(licenseId);
 	}
 }

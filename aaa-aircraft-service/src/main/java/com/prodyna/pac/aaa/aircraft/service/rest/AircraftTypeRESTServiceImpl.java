@@ -8,6 +8,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -18,6 +19,9 @@ import com.prodyna.pac.aaa.aircraft.AircraftType;
 import com.prodyna.pac.aaa.aircraft.exception.AircraftTypeInvalidException;
 import com.prodyna.pac.aaa.aircraft.service.AircraftService;
 import com.prodyna.pac.aaa.aircraft.service.AircraftTypeService;
+import com.prodyna.pac.aaa.auth.AuthenticationSecured;
+import com.prodyna.pac.aaa.auth.Role;
+import com.prodyna.pac.aaa.common.annotation.Monitored;
 import com.prodyna.pac.aaa.common.exception.EntityNotFoundException;
 import com.prodyna.pac.aaa.common.exception.ResponseStatusConstants;
 import com.prodyna.pac.aaa.pilot.License;
@@ -29,10 +33,11 @@ import com.prodyna.pac.aaa.pilot.LicenseService;
  * @author Sergej Herdt, PRODYNA AG
  * 
  */
-@Path("aircraft-type")
+@Path("/aircraft-type")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class AircraftTypeRESTService {
+@Monitored
+public class AircraftTypeRESTServiceImpl implements AircraftTypeRESTService {
 
 	/** Logger for this class. */
 	@Inject
@@ -50,28 +55,17 @@ public class AircraftTypeRESTService {
 	@Inject
 	private LicenseService licenseService;
 
-	/**
-	 * @return List with all available aircraft types.
-	 */
+	@Override
 	@GET
-	@Path("list-aircraft-types")
+	@Path("/list-aircraft-types")
 	public List<AircraftType> listAircraftTypes() {
 		return this.aircraftTypeService.readAircraftTypes();
 	}
 
-	/**
-	 * Creates an aircraft type.
-	 * 
-	 * @param aircraftType
-	 *            The aircraft type to create.
-	 * 
-	 * @return JSON representation of successfully created aircraft type.
-	 * 
-	 * @throws AircraftTypeInvalidException
-	 *             If an aircraft type already exist with the same name.
-	 */
+	@Override
 	@POST
 	@Path("/")
+	@AuthenticationSecured(role = Role.ADMIN)
 	public AircraftType createAircraftType(final AircraftType aircraftType) {
 
 		// check if aircraft type is set
@@ -94,30 +88,16 @@ public class AircraftTypeRESTService {
 		return this.aircraftTypeService.createAircraftType(aircraftType);
 	}
 
-	/**
-	 * Deletes an aircraft type.
-	 * 
-	 * @param aircraftType
-	 *            The aircraft type to delete.
-	 * @return Given aircraft type.
-	 * 
-	 * @throws AircraftTypeInvalidException
-	 *             If the aircraft type doesn't exist.
-	 */
+	@Override
 	@DELETE
-	@Path("/")
-	public AircraftType deleteAircraftType(final AircraftType aircraftType) {
-
-		// check if aircraft type is set
-		final String aircraftTypeName = aircraftType.getName();
-		if (aircraftTypeName == null || aircraftTypeName.equals("")) {
-			throw new AircraftTypeInvalidException("Could not delete the aircraft type without a name.",
-					ResponseStatusConstants.RESOURCE_INVALID);
-		}
+	@Path("/{id}")
+	@AuthenticationSecured(role = Role.ADMIN)
+	public void deleteAircraftType(@PathParam("id") final String aircraftTypeName) {
 
 		// check if the aircraft type really exists
+		final AircraftType aircraftType;
 		try {
-			this.aircraftTypeService.readAircraftType(aircraftTypeName);
+			aircraftType = this.aircraftTypeService.readAircraftType(aircraftTypeName);
 		} catch (final EntityNotFoundException e) {
 			throw new AircraftTypeInvalidException("Could not delete the aircraft type '" + aircraftTypeName
 					+ "', it doesn't exist.", ResponseStatusConstants.RESOURCE_NOT_FOUND);
@@ -145,7 +125,5 @@ public class AircraftTypeRESTService {
 
 		// delete the aircraft type
 		this.aircraftTypeService.deleteAircraftType(aircraftTypeName);
-
-		return aircraftType;
 	}
 }

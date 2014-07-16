@@ -46,7 +46,7 @@ import com.prodyna.pac.aaa.reservation.service.ReservationValidationService;
  * @author Sergej Herdt, PRODYNA AG
  * 
  */
-@Path("reservation")
+@Path("/reservation")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Monitored
@@ -97,7 +97,7 @@ public class ReservationRESTService {
 	 * @return JSON representation of the reservations for the {@link Pilot} represented by given user name.
 	 */
 	@GET
-	@Path("{username}")
+	@Path("/{username}")
 	@AuthenticationSecured(role = Role.PILOT)
 	public Set<Reservation> listReservationForPilot(@PathParam("username") final String username) {
 
@@ -134,7 +134,7 @@ public class ReservationRESTService {
 	 *         {@link Pilot} represented by given user name.
 	 */
 	@GET
-	@Path("{username}/{startDate}/{endDate}")
+	@Path("/{username}/{startDate}/{endDate}")
 	@AuthenticationSecured(role = Role.PILOT)
 	public Set<Reservation> listReservationForPilotAndDateRange(@PathParam("username") final String username,
 			@PathParam("startDate") final long startDate, @PathParam("endDate") final long endDate) {
@@ -235,7 +235,7 @@ public class ReservationRESTService {
 	 * @return Created reservation.
 	 */
 	@POST
-	@Path("{username}")
+	@Path("/{username}")
 	@AuthenticationSecured(role = Role.PILOT)
 	public Reservation createReservationForPilot(@PathParam("username") final String username,
 			final Reservation reservation) {
@@ -375,14 +375,12 @@ public class ReservationRESTService {
 	 * 
 	 * @param id
 	 *            Id of the reservation to delete.
-	 * @param reservation
-	 *            Resercation to delete.
 	 * 
 	 */
 	@DELETE
 	@Path("/{id}")
 	@AuthenticationSecured(role = Role.ADMIN)
-	public void deleteReservation(@PathParam("id") final String id, final Reservation reservation) {
+	public void deleteReservation(@PathParam("id") final String id) {
 		Reservation storedReservation;
 		try {
 			storedReservation = this.reservationService.readReservation(id);
@@ -414,7 +412,7 @@ public class ReservationRESTService {
 	 * @return Created reservation.
 	 */
 	@PUT
-	@Path("{username}/cancel")
+	@Path("/{username}/cancel")
 	@AuthenticationSecured(role = Role.PILOT)
 	public Reservation cancelReservation(@PathParam("username") final String username, final Reservation reservation) {
 		Reservation storedReservation;
@@ -463,7 +461,7 @@ public class ReservationRESTService {
 	 * @return Created reservation.
 	 */
 	@PUT
-	@Path("{username}/return")
+	@Path("/{username}/return")
 	@AuthenticationSecured(role = Role.PILOT)
 	public Reservation returnAircraft(@PathParam("username") final String username, final Reservation reservation) {
 		Reservation storedReservation;
@@ -512,7 +510,7 @@ public class ReservationRESTService {
 	 * @return Created reservation.
 	 */
 	@PUT
-	@Path("{username}/lean")
+	@Path("/{username}/lean")
 	@AuthenticationSecured(role = Role.PILOT)
 	public Reservation leanAircraft(@PathParam("username") final String username, final Reservation reservation) {
 		Reservation storedReservation;

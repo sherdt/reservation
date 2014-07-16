@@ -35,7 +35,7 @@ import com.prodyna.pac.aaa.pilot.PilotService;
  * @author Sergej Herdt, PRODYNA AG
  * 
  */
-@Path("authentication")
+@Path("/authentication")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Monitored
@@ -67,7 +67,7 @@ public class AuthenticationRESTService {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("login")
+	@Path("/login")
 	public String login(final Credentials loginCredentials) throws JOSEException {
 
 		final JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
@@ -134,7 +134,7 @@ public class AuthenticationRESTService {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("changePassword")
+	@Path("/changePassword")
 	public String changePassword(final CredentialsChange credentialsChange) {
 
 		final String resultMessage;

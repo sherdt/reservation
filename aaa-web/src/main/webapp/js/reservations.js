@@ -16,7 +16,7 @@
 				var store = this;
 				
 				this.deleteReservation = function(reservation){
-					$http({method: 'DELETE', url: '/aaa-web/rest-api/reservation/' + reservation.id, data : reservation, headers : {'Content-Type' : 'application/json;charset=utf-8'}})
+					$http({method: 'DELETE', url: '/aaa-web/rest-api/reservation/' + reservation.id, headers : {'Content-Type' : 'application/json;charset=utf-8'}})
 					.success(function(data) {
 						store.listReservations();
 					})

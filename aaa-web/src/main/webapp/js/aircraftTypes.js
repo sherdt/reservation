@@ -14,7 +14,7 @@
 				var store = this;
 
 				this.deleteAircraftType = function(aircraftType){
-					$http({method: 'DELETE', url: '/aaa-web/rest-api/aircraft-type/', data : aircraftType, headers : {'Content-Type' : 'application/json;charset=utf-8'}})
+					$http({method: 'DELETE', url: '/aaa-web/rest-api/aircraft-type/' + aircraftType.name, headers : {'Content-Type' : 'application/json;charset=utf-8'}})
 					.success(function(data) {
 						store.listAircraftTypes();
 					})

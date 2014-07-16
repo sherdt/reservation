@@ -24,6 +24,8 @@ import com.prodyna.pac.aaa.aircraft.exception.AircraftInvalidException;
 import com.prodyna.pac.aaa.aircraft.exception.AircraftTypeNotFoundException;
 import com.prodyna.pac.aaa.aircraft.service.AircraftService;
 import com.prodyna.pac.aaa.aircraft.service.AircraftTypeService;
+import com.prodyna.pac.aaa.auth.AuthenticationSecured;
+import com.prodyna.pac.aaa.auth.Role;
 import com.prodyna.pac.aaa.common.exception.EntityNotFoundException;
 import com.prodyna.pac.aaa.common.exception.ResponseStatusConstants;
 import com.prodyna.pac.aaa.pilot.License;
@@ -39,7 +41,7 @@ import com.prodyna.pac.aaa.reservation.service.ReservationService;
  * @author Sergej Herdt, PRODYNA AG
  * 
  */
-@Path("aircraft")
+@Path("/aircraft")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class AircraftRESTService {
@@ -68,7 +70,7 @@ public class AircraftRESTService {
 	 * @return List with all available aircrafts.
 	 */
 	@GET
-	@Path("list-aircrafts")
+	@Path("/list-aircrafts")
 	public List<Aircraft> listAircrafts() {
 		return this.aircraftService.readAircrafts();
 	}
@@ -85,7 +87,7 @@ public class AircraftRESTService {
 	 *             If the {@link Pilot} with given user name doesn't exist.
 	 */
 	@GET
-	@Path("{username}")
+	@Path("/{username}")
 	public Set<Aircraft> listAircraftsForPilot(@PathParam("username") final String username) {
 
 		final Set<Aircraft> resultSet = new HashSet<Aircraft>();
@@ -137,6 +139,7 @@ public class AircraftRESTService {
 	 */
 	@POST
 	@Path("/")
+	@AuthenticationSecured(role = Role.ADMIN)
 	public Aircraft createAircraft(final Aircraft aircraft) {
 		final AircraftType aircraftType = aircraft.getAircraftType();
 
@@ -178,29 +181,29 @@ public class AircraftRESTService {
 	}
 
 	/**
-	 * Deletes an aircraft.
+	 * Deletes an aircraft represented by given tail sign.
 	 * 
-	 * @param aircraft
-	 *            The aircraft to delete.
-	 * @return Given aircraft.
+	 * @param tailSign
+	 *            The tail sign of the aircraft to delete.
 	 * 
 	 * @throws AircraftInvalidException
 	 *             If the aircraft doesn't exist.
 	 */
 	@DELETE
-	@Path("/")
-	public Aircraft deleteAircraft(final Aircraft aircraft) {
+	@Path("/{id}")
+	@AuthenticationSecured(role = Role.ADMIN)
+	public void deleteAircraft(@PathParam("id") final String tailSign) {
 
 		// check if tail sign is set
-		final String tailSign = aircraft.getTailSign();
 		if (tailSign == null || tailSign.equals("")) {
 			throw new AircraftInvalidException("Could not delete the aircraft without a tail sign.",
 					ResponseStatusConstants.RESOURCE_INVALID);
 		}
 
 		// check if the aircraft really exists
+		Aircraft aircraft;
 		try {
-			this.aircraftService.readAircraft(tailSign);
+			aircraft = this.aircraftService.readAircraft(tailSign);
 		} catch (final EntityNotFoundException e) {
 			throw new AircraftInvalidException("Could not delete the aircraft, the aircraft with the tail sign '"
 					+ tailSign + "' doesn't exist.", ResponseStatusConstants.RESOURCE_NOT_FOUND);
@@ -216,7 +219,5 @@ public class AircraftRESTService {
 		}
 
 		this.aircraftService.deleteAircraft(tailSign);
-
-		return aircraft;
 	}
 }

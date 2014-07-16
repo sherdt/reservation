@@ -23,8 +23,10 @@ import com.prodyna.pac.aaa.common.annotation.Monitored;
 import com.prodyna.pac.aaa.common.exception.EntityNotFoundException;
 import com.prodyna.pac.aaa.common.exception.ResponseStatusConstants;
 import com.prodyna.pac.aaa.pilot.License;
+import com.prodyna.pac.aaa.pilot.LicenseService;
 import com.prodyna.pac.aaa.pilot.Pilot;
 import com.prodyna.pac.aaa.pilot.PilotService;
+import com.prodyna.pac.aaa.pilot.exception.LicenseInvalidException;
 import com.prodyna.pac.aaa.pilot.exception.PilotInvalidException;
 
 /**
@@ -33,7 +35,7 @@ import com.prodyna.pac.aaa.pilot.exception.PilotInvalidException;
  * @author Sergej Herdt, PRODYNA AG
  * 
  */
-@Path("pilot")
+@Path("/pilot")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Monitored
@@ -46,6 +48,10 @@ public class PilotRESTService {
 	/** Pilot service. */
 	@Inject
 	private PilotService pilotService;
+
+	/** License service. */
+	@Inject
+	private LicenseService licenseService;
 
 	/**
 	 * @return List with all available pilots.
@@ -97,9 +103,8 @@ public class PilotRESTService {
 	/**
 	 * Deletes a pilot.
 	 * 
-	 * @param pilot
-	 *            The pilot to delete.
-	 * @return Given pilot.
+	 * @param username
+	 *            The user name of the pilot to delete.
 	 * 
 	 * @throws PilotInvalidException
 	 *             If the pilot doesn't exist.
@@ -107,10 +112,9 @@ public class PilotRESTService {
 	@DELETE
 	@Path("/{username}")
 	@AuthenticationSecured(role = Role.ADMIN)
-	public Pilot deletePilot(final Pilot pilot) {
+	public void deletePilot(@PathParam("username") final String username) {
 
 		// check if user name is set
-		final String username = pilot.getUsername();
 		if (username == null || username.equals("")) {
 			throw new PilotInvalidException("Could not delete the pilot without a user name.",
 					ResponseStatusConstants.RESOURCE_INVALID);
@@ -125,8 +129,6 @@ public class PilotRESTService {
 		}
 
 		this.pilotService.deletePilot(username);
-
-		return pilot;
 	}
 
 	/**
@@ -170,8 +172,8 @@ public class PilotRESTService {
 	 * 
 	 * @param username
 	 *            User name of the pilot to delete the license from.
-	 * @param license
-	 *            The license to remove.
+	 * @param licenseId
+	 *            The id of the license to remove.
 	 * 
 	 * @return JSON representation of updated pilot.
 	 * 
@@ -179,9 +181,10 @@ public class PilotRESTService {
 	 *             If pilot doesn't exists with given user name.
 	 */
 	@DELETE
-	@Path("/{username}/delete-license")
+	@Path("/{username}/delete-license/{licenseId}")
 	@AuthenticationSecured(role = Role.ADMIN)
-	public Pilot deletePilotLicense(@PathParam("username") final String username, final License license) {
+	public Pilot deletePilotLicense(@PathParam("username") final String username,
+			@PathParam("licenseId") final String licenseId) {
 
 		// check if the pilot already exists
 		final Pilot pilot;
@@ -196,9 +199,17 @@ public class PilotRESTService {
 		if (licenses == null) {
 			licenses = new TreeSet<License>();
 		}
+
+		License license;
+		try {
+			license = this.licenseService.readLicense(licenseId);
+		} catch (final EntityNotFoundException e) {
+			throw new LicenseInvalidException("Could not update the pilots license, the license doesn't exist.",
+					ResponseStatusConstants.RESOURCE_NOT_FOUND);
+		}
+
 		licenses.remove(license);
 
 		return this.pilotService.updatePilot(pilot);
 	}
-
 }
