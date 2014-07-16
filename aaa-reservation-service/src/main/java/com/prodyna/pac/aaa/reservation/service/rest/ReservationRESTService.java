@@ -1,8 +1,10 @@
 package com.prodyna.pac.aaa.reservation.service.rest;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -18,9 +20,14 @@ import javax.ws.rs.core.MediaType;
 import org.slf4j.Logger;
 
 import com.prodyna.pac.aaa.aircraft.Aircraft;
+import com.prodyna.pac.aaa.aircraft.AircraftType;
+import com.prodyna.pac.aaa.auth.AuthenticationSecured;
+import com.prodyna.pac.aaa.auth.Role;
+import com.prodyna.pac.aaa.common.annotation.Monitored;
 import com.prodyna.pac.aaa.common.exception.EntityNotFoundException;
 import com.prodyna.pac.aaa.common.exception.ResourceInvalidException;
 import com.prodyna.pac.aaa.common.exception.ResponseStatusConstants;
+import com.prodyna.pac.aaa.pilot.License;
 import com.prodyna.pac.aaa.pilot.Pilot;
 import com.prodyna.pac.aaa.pilot.PilotService;
 import com.prodyna.pac.aaa.pilot.exception.PilotNotFoundException;
@@ -42,6 +49,7 @@ import com.prodyna.pac.aaa.reservation.service.ReservationValidationService;
 @Path("reservation")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
+@Monitored
 public class ReservationRESTService {
 
 	/** Constant for error message if an pilot could not be found in DB for given user name. */
@@ -68,6 +76,20 @@ public class ReservationRESTService {
 	private ReservationValidationService reservationValidationService;
 
 	/**
+	 * Retrieves all reservations.
+	 * 
+	 * @return JSON representation of all the reservations.
+	 */
+	@GET
+	@Path("/list-reservations")
+	public List<Reservation> listReservations() {
+
+		final List<Reservation> allReservations = this.reservationService.readReservations();
+
+		return allReservations;
+	}
+
+	/**
 	 * Retrieves the reservations for the {@link Pilot} represented by given user name.
 	 * 
 	 * @param username
@@ -76,6 +98,7 @@ public class ReservationRESTService {
 	 */
 	@GET
 	@Path("{username}")
+	@AuthenticationSecured(role = Role.PILOT)
 	public Set<Reservation> listReservationForPilot(@PathParam("username") final String username) {
 
 		Set<Reservation> reservations = null;
@@ -112,17 +135,18 @@ public class ReservationRESTService {
 	 */
 	@GET
 	@Path("{username}/{startDate}/{endDate}")
+	@AuthenticationSecured(role = Role.PILOT)
 	public Set<Reservation> listReservationForPilotAndDateRange(@PathParam("username") final String username,
 			@PathParam("startDate") final long startDate, @PathParam("endDate") final long endDate) {
 
-		final Set<Reservation> resultList = new HashSet<Reservation>();
+		final Set<Reservation> resultSet = new HashSet<Reservation>();
 
 		try {
 			final Pilot pilot = this.pilotService.readPilot(username);
 			final Set<Reservation> reservations = pilot.getReservations();
 			for (final Reservation reservation : reservations) {
 				if (reservation.getStartDate().getTime() >= startDate && reservation.getEndDate().getTime() <= endDate) {
-					resultList.add(reservation);
+					resultSet.add(reservation);
 				}
 			}
 		} catch (final EntityNotFoundException e) {
@@ -132,7 +156,22 @@ public class ReservationRESTService {
 					ResponseStatusConstants.RESOURCE_NOT_FOUND);
 		}
 
-		return resultList;
+		return resultSet;
+	}
+
+	/**
+	 * Retrieves a list of {@link Reservation}s for all the other {@link Pilot}s but not the one represented by given
+	 * user name.
+	 * 
+	 * @param username
+	 *            User name for the {@link Pilot} to skip the {@link Reservation}s for.
+	 * @return List of {@link Reservation}s of other pilots. The list might be empty, but the result is never null.
+	 */
+	@GET
+	@Path("/other-than/{username}")
+	@AuthenticationSecured(role = Role.PILOT)
+	public Set<Reservation> listOtherReservationsForDateRange(@PathParam("username") final String username) {
+		return this.listOtherReservationsForDateRange(username, 0, Long.MAX_VALUE);
 	}
 
 	/**
@@ -148,11 +187,12 @@ public class ReservationRESTService {
 	 * @return List of {@link Reservation}s of other pilots. The list might be empty, but the result is never null.
 	 */
 	@GET
-	@Path("{username}/{startDate}/{endDate}/others")
+	@Path("/other-than/{username}/{startDate}/{endDate}")
+	@AuthenticationSecured(role = Role.PILOT)
 	public Set<Reservation> listOtherReservationsForDateRange(@PathParam("username") final String username,
 			@PathParam("startDate") final long startDate, @PathParam("endDate") final long endDate) {
 
-		final Set<Reservation> resultList = new HashSet<Reservation>();
+		final Set<Reservation> resultSet = new HashSet<Reservation>();
 
 		Pilot pilot;
 		try {
@@ -179,10 +219,10 @@ public class ReservationRESTService {
 				continue;
 			}
 
-			resultList.add(reservation);
+			resultSet.add(reservation);
 		}
 
-		return resultList;
+		return resultSet;
 	}
 
 	/**
@@ -196,10 +236,16 @@ public class ReservationRESTService {
 	 */
 	@POST
 	@Path("{username}")
+	@AuthenticationSecured(role = Role.PILOT)
 	public Reservation createReservationForPilot(@PathParam("username") final String username,
 			final Reservation reservation) {
 		this.logger.debug("Request to create a new reservation [{}] for user [{}] has been received.", reservation,
 				username);
+
+		// id is required but we don't want to force the client to generate one, so we are doing it here
+		if (reservation.getId() == null || "".equals(reservation.getId())) {
+			reservation.setId(UUID.randomUUID().toString());
+		}
 
 		Reservation createdReservation = null;
 		try {
@@ -236,6 +282,29 @@ public class ReservationRESTService {
 				}
 			}
 
+			// check if user is allowed to reserve this aircraft
+			final AircraftType aircraftType = reservation.getAircraft().getAircraftType();
+			final Set<License> licenses = pilot.getLicenses();
+			boolean hasValidLicense = false;
+			final Date now = new Date();
+			for (final License license : licenses) {
+				// ignore all expired licenses
+				if (now.after(license.getExpirationDate())) {
+					continue;
+				}
+
+				// check if aircraft type matches the one in the license
+				if (aircraftType.equals(license.getAircraftType())) {
+					hasValidLicense = true;
+					break;
+				}
+			}
+			if (!hasValidLicense) {
+				throw new ReservationInvalidException("The pilot '" + username
+						+ "' has no valid license for the aircraft type '" + aircraftType + "'",
+						ResponseStatusConstants.RESOURCE_INVALID);
+			}
+
 			// create new reservation
 			createdReservation = this.reservationService.createReservation(reservation);
 
@@ -259,7 +328,25 @@ public class ReservationRESTService {
 
 	/**
 	 * Checks if the date ranges for given reservations are overlapping each other. The check is only performed if the
-	 * second reservation is already in status RESERVED.
+	 * second reservation is already in status RESERVED or LEANT.
+	 * 
+	 * <pre>
+	 * Case 1:
+	 *        |----d1-----|
+	 * |------d2------|
+	 * 
+	 * Case 2:
+	 * |------d1------|
+	 *       |------d2------|
+	 * 	 
+	 * Case 3:
+	 *    |----d1---|
+	 * |-------d2--------|
+	 * 
+	 * All tests are covered by the following two if conditions:
+	 * start1 <= end2 and start2 <= end1
+	 * 
+	 * </pre>
 	 * 
 	 * @param firstReservation
 	 *            First reservation to get the start and end date from.
@@ -275,12 +362,45 @@ public class ReservationRESTService {
 			final String errorMessage) {
 
 		final String reservationState = secondReservation.getReservationState().getName();
-		if ("RESERVED".equals(reservationState)
+		if (("RESERVED".equals(reservationState) || "LEANT".equals(reservationState))
 				&& secondReservation.getStartDate().getTime() < firstReservation.getEndDate().getTime()
 				&& firstReservation.getStartDate().getTime() < secondReservation.getEndDate().getTime()) {
 
 			throw new ReservationInvalidException(errorMessage, ResponseStatusConstants.RESOURCE_INVALID);
 		}
+	}
+
+	/**
+	 * Deletes the reservation represented by given id.
+	 * 
+	 * @param id
+	 *            Id of the reservation to delete.
+	 * @param reservation
+	 *            Resercation to delete.
+	 * 
+	 */
+	@DELETE
+	@Path("/{id}")
+	@AuthenticationSecured(role = Role.ADMIN)
+	public void deleteReservation(@PathParam("id") final String id, final Reservation reservation) {
+		Reservation storedReservation;
+		try {
+			storedReservation = this.reservationService.readReservation(id);
+		} catch (final EntityNotFoundException e) {
+			throw new ReservationInvalidException("Reservation could not been deleted, it doesn't exist.",
+					ResponseStatusConstants.RESOURCE_INVALID);
+		}
+
+		final List<Pilot> allPilots = this.pilotService.readPilots();
+		for (final Pilot pilot : allPilots) {
+			final Set<Reservation> reservations = pilot.getReservations();
+			if (reservations.contains(storedReservation)) {
+				reservations.remove(storedReservation);
+				break;
+			}
+		}
+
+		this.reservationService.deleteReservation(id);
 	}
 
 	/**
@@ -293,8 +413,9 @@ public class ReservationRESTService {
 	 *            {@link Reservation} to cancel.
 	 * @return Created reservation.
 	 */
-	@DELETE
-	@Path("{username}")
+	@PUT
+	@Path("{username}/cancel")
+	@AuthenticationSecured(role = Role.PILOT)
 	public Reservation cancelReservation(@PathParam("username") final String username, final Reservation reservation) {
 		Reservation storedReservation;
 		try {
@@ -343,9 +464,41 @@ public class ReservationRESTService {
 	 */
 	@PUT
 	@Path("{username}/return")
+	@AuthenticationSecured(role = Role.PILOT)
 	public Reservation returnAircraft(@PathParam("username") final String username, final Reservation reservation) {
-		// TODO: implement properly
-		throw new ReservationInvalidException("return feature is not implemented yet.", 500);
+		Reservation storedReservation;
+		try {
+			storedReservation = this.reservationService.readReservation(reservation.getId());
+		} catch (final EntityNotFoundException e) {
+			throw new ReservationInvalidException("You tried to return an reservation which doesn't exist.",
+					ResponseStatusConstants.RESOURCE_INVALID);
+		}
+
+		final Pilot pilot;
+		try {
+			pilot = this.pilotService.readPilot(username);
+		} catch (final EntityNotFoundException e) {
+			throw new ReservationInvalidException("No pilot could be found for given user name '" + username + "'.", e,
+					ResponseStatusConstants.RESOURCE_INVALID);
+		}
+
+		// check if the user is trying to return foreign reservation, this is not allowed
+		if (!pilot.getReservations().contains(reservation)) {
+			throw new ReservationInvalidException("You are not allowed to return foreign reservations.",
+					ResponseStatusConstants.RESOURCE_INVALID);
+		}
+
+		Reservation updatedReservation;
+		final ReservationState reservationState = storedReservation.getReservationState();
+		if ("LEANT".equals(reservationState.getName())) {
+			storedReservation.setReservationState(this.readOrCreateReservationState("RETURNED"));
+			updatedReservation = this.reservationService.updateReservation(storedReservation);
+		} else {
+			throw new ReservationInvalidException("You are not allowed to return this reservation, it's not leant.",
+					ResponseStatusConstants.RESOURCE_INVALID);
+		}
+
+		return updatedReservation;
 	}
 
 	/**
@@ -359,10 +512,54 @@ public class ReservationRESTService {
 	 * @return Created reservation.
 	 */
 	@PUT
-	@Path("{username}/lend")
-	public Reservation lendAircraft(@PathParam("username") final String username, final Reservation reservation) {
-		// TODO: implement properly
-		throw new ReservationInvalidException("Lending the aircraft feature is not implemented yet.", 500);
+	@Path("{username}/lean")
+	@AuthenticationSecured(role = Role.PILOT)
+	public Reservation leanAircraft(@PathParam("username") final String username, final Reservation reservation) {
+		Reservation storedReservation;
+		try {
+			storedReservation = this.reservationService.readReservation(reservation.getId());
+		} catch (final EntityNotFoundException e) {
+			throw new ReservationInvalidException("You tried to lean an reservation which doesn't exist.",
+					ResponseStatusConstants.RESOURCE_INVALID);
+		}
+
+		final Date now = new Date();
+		if (storedReservation.getStartDate().after(now)) {
+			throw new ReservationInvalidException("You cannot lean the aircraft '"
+					+ reservation.getAircraft().getTailSign() + "' yet, please try again later.",
+					ResponseStatusConstants.RESOURCE_INVALID);
+		}
+
+		if (now.after(storedReservation.getEndDate())) {
+			throw new ReservationInvalidException("The reservation end date is exceed, sorry you are too late.",
+					ResponseStatusConstants.RESOURCE_INVALID);
+		}
+
+		final Pilot pilot;
+		try {
+			pilot = this.pilotService.readPilot(username);
+		} catch (final EntityNotFoundException e) {
+			throw new ReservationInvalidException("No pilot could be found for given user name '" + username + "'.", e,
+					ResponseStatusConstants.RESOURCE_INVALID);
+		}
+
+		// check if the user is trying to lean foreign reservation, this is not allowed
+		if (!pilot.getReservations().contains(reservation)) {
+			throw new ReservationInvalidException("You are not allowed to lean foreign reservations.",
+					ResponseStatusConstants.RESOURCE_INVALID);
+		}
+
+		Reservation updatedReservation;
+		final ReservationState reservationState = storedReservation.getReservationState();
+		if ("RESERVED".equals(reservationState.getName())) {
+			storedReservation.setReservationState(this.readOrCreateReservationState("LEANT"));
+			updatedReservation = this.reservationService.updateReservation(storedReservation);
+		} else {
+			throw new ReservationInvalidException("You are not allowed to lean this reservation, it's not reserved.",
+					ResponseStatusConstants.RESOURCE_INVALID);
+		}
+
+		return updatedReservation;
 	}
 
 	/**
@@ -376,7 +573,7 @@ public class ReservationRESTService {
 		ReservationState reservationState;
 		try {
 			reservationState = this.reservationStateService.readReservationState(stateName);
-		} catch (final EntityNotFoundException e1) {
+		} catch (final EntityNotFoundException e) {
 			reservationState = this.reservationStateService.createReservationState(new ReservationState(stateName));
 		}
 		return reservationState;

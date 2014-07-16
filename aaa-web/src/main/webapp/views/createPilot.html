@@ -9,15 +9,15 @@
 			<form role="form" name="pilotForm" ng-submit="pilotForm.$valid && createPilotCtrl.createPilot()" novalidate>
 				<div class="modal-body">
 					<div class="form-group">
-						<label for="name">Name</label>
-						<input ng-model="createPilotCtrl.pilot.name" type="text" class="form-control" id="name" placeholder="Enter the display name" required>
-					</div>
-					<div class="form-group">
 						<label for="username">Username</label>
 						<input ng-model="createPilotCtrl.pilot.username" type="text" class="form-control" id="username" placeholder="Enter the username" required>
 					</div>
 					<div class="form-group">
-						<label for="name">Email address</label>
+						<label for="name">Name</label>
+						<input ng-model="createPilotCtrl.pilot.name" type="text" class="form-control" id="name" placeholder="Enter the display name" required>
+					</div>
+					<div class="form-group">
+						<label for="email">Email address</label>
 						<input ng-model="createPilotCtrl.pilot.email" type="text" class="form-control" id="email" placeholder="Enter the email address" required>
 					</div>
 				</div>

@@ -15,7 +15,6 @@ import com.prodyna.pac.aaa.aircraft.AircraftType;
 import com.prodyna.pac.aaa.aircraft.service.AircraftService;
 import com.prodyna.pac.aaa.aircraft.service.AircraftTypeService;
 import com.prodyna.pac.aaa.common.exception.AircraftAllocationAppException;
-import com.prodyna.pac.aaa.common.exception.DeleteException;
 
 /**
  * Tests for {@link AircraftTypeService} and {@link AircraftService}.
@@ -53,8 +52,6 @@ public class AircraftTest {
 	/**
 	 * Tests all methods of the crud service for {@link AircraftType}.
 	 * 
-	 * @throws DeleteException
-	 *             If deletion failed.
 	 * @throws AircraftAllocationAppException
 	 *             Should not be thrown in this test.
 	 */

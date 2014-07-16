@@ -14,6 +14,7 @@ import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.prodyna.pac.aaa.auth.Credentials;
 import com.prodyna.pac.aaa.auth.exception.InvalidAuthorizationException;
+import com.prodyna.pac.aaa.common.annotation.Monitored;
 import com.prodyna.pac.aaa.common.exception.ResponseStatusConstants;
 
 /**
@@ -21,6 +22,7 @@ import com.prodyna.pac.aaa.common.exception.ResponseStatusConstants;
  * object witch should be @RequestScoped.
  */
 @Provider
+@Monitored
 public class AuthenticationFilter implements ContainerRequestFilter {
 
 	/** Logger for this class. */
@@ -64,5 +66,5 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 					ResponseStatusConstants.UNAUTHORIZED);
 		}
 	}
-	
+
 }

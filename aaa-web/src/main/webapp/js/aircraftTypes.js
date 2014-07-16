@@ -8,7 +8,7 @@
 		return {
 			restrict : 'E',
 			templateUrl : "views/aircraftTypes.html",
-			controller : function($http, $window) {
+			controller : function($http, $scope) {
 				console.log('Initializing the aircraftTypeCtrl.');
 				this.aircraftTypes = [];
 				var store = this;
@@ -19,16 +19,15 @@
 						store.listAircraftTypes();
 					})
 					.error(function(data) {
-						console.log(data);
+						$scope.tabCtrl.showErrorMessage('Delete aircraft type problem', data.errorMessage);
 					});
 				};
 				
 				this.listAircraftTypes = function() {
 					$http.get('/aaa-web/rest-api/aircraft-type/list-aircraft-types').success(function(data) {
 						store.aircraftTypes = data;
-						$window.aircraftTypes = store.aircraftTypes;
 					}).error(function(data) {
-						console.log(data);
+						$scope.tabCtrl.showErrorMessage('List aircraft type problem', data.errorMessage);
 					});
 				};
 				
@@ -57,8 +56,7 @@
 						$scope.aircraftTypeCtrl.listAircraftTypes();
 					})
 					.error(function(data) {
-						console.log(data);
-						store.errorMessage = data;
+						$scope.tabCtrl.showErrorMessage('Create aircraft type problem', data.errorMessage);
 					});
 				};
 				

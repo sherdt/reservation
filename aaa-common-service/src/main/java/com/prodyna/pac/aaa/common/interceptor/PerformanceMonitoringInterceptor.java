@@ -9,7 +9,7 @@ import javax.interceptor.InvocationContext;
 import org.slf4j.Logger;
 
 import com.prodyna.pac.aaa.common.annotation.Monitored;
-import com.prodyna.pac.aaa.common.mbean.PerformanceMonitoringMXBean;
+import com.prodyna.pac.aaa.common.monitoring.PerformanceMonitoringMXBean;
 
 /**
  * Performance monitoring interceptor.
@@ -24,7 +24,7 @@ public class PerformanceMonitoringInterceptor {
 
 	/** Performance monitoring MBean to save collected execution data to. */
 	@Inject
-	private PerformanceMonitoringMXBean performanceMonitoringMXBean;
+	private PerformanceMonitoringMXBean performanceMonitoringCollector;
 
 	/** Logger for this class. */
 	@Inject
@@ -46,12 +46,11 @@ public class PerformanceMonitoringInterceptor {
 				ctx.getMethod().getName());
 
 		final long startTimeMillis = System.currentTimeMillis();
-		Object result = null;
-		result = ctx.proceed();
+		final Object result = ctx.proceed();
 		final long endTimeMillis = System.currentTimeMillis();
 
-		this.performanceMonitoringMXBean.addMethodExecutionDuration(ctx.getMethod().getName(), endTimeMillis
-				- startTimeMillis);
+		this.performanceMonitoringCollector.addMethodExecutionDuration(ctx.getTarget().getClass().getSimpleName() + "."
+				+ ctx.getMethod().getName(), endTimeMillis - startTimeMillis);
 
 		return result;
 	}

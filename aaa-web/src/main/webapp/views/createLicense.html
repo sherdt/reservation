@@ -1,0 +1,44 @@
+<div class="modal fade" id="createLicenseDialog" tabindex="-1" role="dialog"
+	aria-labelledby="pilotDialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Create new license</h4>
+			</div>
+			<form role="form" name="licenseForm" ng-submit="licenseForm.$valid && createLicenseCtrl.createLicense()" novalidate>
+				<div class="modal-body" ng-show="aircraftTypeCtrl.aircraftTypes.length == 0">
+					<div class="form-group">
+						<label>No aircraft type found, please create one first.</label>
+					</div>
+				</div>
+				<div class="modal-body" ng-hide="aircraftTypeCtrl.aircraftTypes.length == 0">
+					<div class="form-group">
+						<label for="aircaftType">Aircraft type</label>
+						<select ng-model="createLicenseCtrl.license.aircraftType" ng-options="aircraftType.name for aircraftType in aircraftTypeCtrl.aircraftTypes" class="form-control" required></select>
+					</div>
+					
+					<div class="form-group">
+						<label for="expirationDate">Valid until</label>
+						<div class="dropdown">
+						  <a class="dropdown-toggle" id="dropdownStartDate" role="button" data-toggle="dropdown" data-target="#">
+						    <div class="input-group">
+						    	<input type="text" class="form-control" data-ng-model="createLicenseCtrl.license.expirationDate" id="expirationDate">
+						    	<span class="input-group-addon">
+						    		<i class="glyphicon glyphicon-calendar"></i>
+						    	</span>
+						    </div>
+						  </a>
+						  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+						    <datetimepicker data-ng-model="createLicenseCtrl.license.expirationDate" data-datetimepicker-config="{ dropdownSelector: '#dropdownStartDate' }"/>
+						  </ul>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer" ng-hide="aircraftTypeCtrl.aircraftTypes.length == 0">
+					<input type="submit" class="btn btn-primary" ng-class="{'disabled':licenseForm.$invalid}" value="Create" />
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

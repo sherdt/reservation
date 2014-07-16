@@ -8,23 +8,18 @@
 		return {
 			restrict : 'E',
 			templateUrl : "views/aircrafts.html",
-			controller : function($http, $window) {
+			controller : function($http, $scope) {
 				console.log('Initializing the aircraftCtrl.');
 				this.aircrafts = [];
-				this.aircraftTypes = $window.aircraftTypes;
 				var store = this;
 				
-				this.updateAircraftTypes = function() {
-					this.aircraftTypes = $window.aircraftTypes;
-				};
-
 				this.deleteAircraft = function(aircraft){
 					$http({method: 'DELETE', url: '/aaa-web/rest-api/aircraft/', data : aircraft, headers : {'Content-Type' : 'application/json;charset=utf-8'}})
 					.success(function(data) {
 						store.listAircrafts();
 					})
 					.error(function(data) {
-						console.log(data);
+						$scope.tabCtrl.showErrorMessage('Delete aircrafts problem', data.errorMessage);
 					});
 				};
 				
@@ -32,7 +27,7 @@
 					$http.get('/aaa-web/rest-api/aircraft/list-aircrafts').success(function(data) {
 						store.aircrafts = data;
 					}).error(function(data) {
-						console.log(data);
+						$scope.tabCtrl.showErrorMessage('List aircrafts problem', data.errorMessage);
 					});
 				};
 				
@@ -47,7 +42,7 @@
 		return {
 			restrict : 'E',
 			templateUrl : "views/createAircraft.html",
-			controller : function($http, $scope, $window) {
+			controller : function($http, $scope) {
 				console.log('Initializing the createAircraftCtrl.');
 				this.aircraft = {};
 				var store = this;
@@ -61,8 +56,7 @@
 						$scope.aircraftCtrl.listAircrafts();
 					})
 					.error(function(data) {
-						console.log(data);
-						store.errorMessage = data;
+						$scope.tabCtrl.showErrorMessage('Create aircraft problem', data.errorMessage);
 					});
 				};
 				

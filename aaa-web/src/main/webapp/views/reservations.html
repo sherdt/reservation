@@ -1,0 +1,53 @@
+<div ng-show="tab.isSet(4)">
+	<div>
+		<div ng-show="reservationCtrl.myReservations.length == 0 && reservationCtrl.otherReservations.length == 0 && reservationCtrl.allReservations == 0">
+			<div class="alert alert-info"><strong>No reservations available</strong></div>
+		</div>
+		<h3 ng-hide="reservationCtrl.myReservations.length == 0">My reservations:</h3>
+		<blockquote ng-repeat="reservation in reservationCtrl.myReservations"
+					ng-mouseenter="hover = true"
+				    ng-mouseleave="hover = false"
+				    ng-class="{'btn-default':hover}">
+		    <div class="pull-right" ng-show="hover">
+				<a ng-show="reservation.reservationState.name == 'RESERVED'" ng-click="reservationCtrl.changeReservation(reservation, 'lean')" class="btn btn-success glyphicon glyphicon-ok"></a>
+				<a ng-show="reservation.reservationState.name == 'LEANT'" ng-click="reservationCtrl.changeReservation(reservation, 'return')" class="btn btn-info glyphicon glyphicon-arrow-left"></a>
+				<a ng-show="reservation.reservationState.name == 'RESERVED'" ng-click="reservationCtrl.changeReservation(reservation, 'cancel')" class="btn btn-danger glyphicon glyphicon-remove"></a>
+			</div>
+			<p>{{reservation.aircraft.tailSign}} ({{reservation.aircraft.aircraftType.name}})</p>
+			<p>{{reservation.startDate | asDate | date:'yyyy-MM-dd HH:mm'}} &#8212; {{reservation.endDate | asDate | date:'yyyy-MM-dd HH:mm'}}</p>
+			<p>{{reservation.reservationState.name | lowercase}}</p>
+		</blockquote>
+		
+		<h3 ng-hide="reservationCtrl.otherReservations.length == 0">Other reservations:</h3>
+		<blockquote ng-repeat="reservation in reservationCtrl.otherReservations"
+					ng-mouseenter="hover = true"
+				    ng-mouseleave="hover = false"
+				    ng-class="{'btn-default':hover}">
+			<p>{{reservation.aircraft.tailSign}} ({{reservation.aircraft.aircraftType.name}})</p>
+			<p>{{reservation.startDate | asDate | date:'yyyy-MM-dd HH:mm'}} &#8212; {{reservation.endDate | asDate | date:'yyyy-MM-dd HH:mm'}}</p>
+			<p>{{reservation.reservationState.name | lowercase}}</p>
+		</blockquote>
+		
+		<h3 ng-show="(!authCtrl.profile.role || authCtrl.profile.role == 'ADMIN') && reservationCtrl.allReservations.length > 0">All reservations:</h3>
+		<blockquote ng-show="!authCtrl.profile.role || authCtrl.profile.role == 'ADMIN'"
+					ng-repeat="reservation in reservationCtrl.allReservations"
+					ng-mouseenter="hover = true"
+				    ng-mouseleave="hover = false"
+				    ng-class="{'btn-default':hover}">
+   		    <div class="pull-right" ng-show="hover">
+				<a ng-show="authCtrl.profile.role == 'ADMIN'" ng-click="reservationCtrl.deleteReservation(reservation)" class="btn btn-danger glyphicon glyphicon-remove"></a>
+			</div>
+			<p>{{reservation.aircraft.tailSign}} ({{reservation.aircraft.aircraftType.name}})</p>
+			<p>{{reservation.startDate | asDate | date:'yyyy-MM-dd HH:mm'}} &#8212; {{reservation.endDate | asDate | date:'yyyy-MM-dd HH:mm'}}</p>
+			<p>{{reservation.reservationState.name | lowercase}}</p>
+		</blockquote>
+
+
+		<div ng-show="authCtrl.profile.role == 'PILOT'">
+			<a class="btn btn-info" data-toggle="modal" data-target="#createReservationDialog">Create new reservation</a>
+		</div>
+	</div>
+</div>
+
+
+<create-reservation></create-reservation>

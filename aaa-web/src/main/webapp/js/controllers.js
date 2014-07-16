@@ -21,13 +21,23 @@ function url_base64_decode(str) {
 }
 
 angular.module('aircraftAllocationApp.controllers', [])
-  .controller('PanelController', ['$http', '$scope', function($http, $scope) {
+  .controller('tabCtrl', ['$http', '$scope', function($http, $scope) {
 	  this.tab = 4;
+	  this.errorDialogTitle = "";
+	  this.errorDialogMessage = "";
+	  $scope.tabCtrl = this;
+	  
 	  this.setTab = function(selectedTab) {
 		  this.tab = selectedTab;
 	  };
 	  this.isSet = function(tab) {
 		  return this.tab === tab;
+	  };
+	  
+	  this.showErrorMessage = function(title, message) {
+		  this.errorDialogTitle = title;
+		  this.errorDialogMessage = message;
+		  $('#errorDialog').modal('show');
 	  };
 	  
 	  $http
@@ -36,8 +46,7 @@ angular.module('aircraftAllocationApp.controllers', [])
 			$scope.version = data.version;
 		})
 		.error(function (data, status, headers, config) {
-			// handle read software version errors here
-			console.log('ERROR (' + status + '): ' + data);
+			$scope.tabCtrl.showErrorMessage('Read application version problem', data.errorMessage);
 		});
 	  
   }])
@@ -68,7 +77,7 @@ angular.module('aircraftAllocationApp.controllers', [])
 				// handle change password errors here
 				$window.sessionStorage.message = data;
 				$scope.credentialsChange = {};
-				console.log("ERROR: " + $window.sessionStorage.message);
+				$scope.tabCtrl.showErrorMessage('Change password problem', data.errorMessage);
 			});
 	  };
 	  
@@ -93,20 +102,19 @@ angular.module('aircraftAllocationApp.controllers', [])
 				
 				// Handle login errors here
 				$window.sessionStorage.message = 'Invalid username or password, please provide correct credentials';
-				console.log("ERROR: " + $window.sessionStorage.message);
 			});
 	  };
 	  
 	  this.logout = function() {
-		  this.isAdmin = false;
-		  $window.sessionStorage.isAdmin = false;
-		  	$window.sessionStorage.message = '';
+		  	this.isAdmin = false;
+		  	$window.sessionStorage.isAdmin = false;
+			$window.sessionStorage.message = '';
 			$window.sessionStorage.isAuthenticated = false;
 			$window.sessionStorage.profile = '{}';
 			delete $window.sessionStorage.token;
 	  };
   }])
-  .factory('authInterceptor', function ($rootScope, $q, $window) {
+  .factory('authInterceptor', function ($q, $window) {
 	  return {
 	    request: function (config) {
 			config.headers = config.headers || {};
@@ -115,14 +123,12 @@ angular.module('aircraftAllocationApp.controllers', [])
 			}
 			return config;
 	    },
-	    responseError: function (rejection) {
-	    	console.log("Request error:");
-	    	console.log(rejection);
-			if (rejection.status === 401) {
-			  // handle the case where the user is not authenticated
-				  
+	    responseError: function (data) {
+			if (data.status === 401) {
+				// handle the case where the user is not authenticated
+				console.log(data.data.errorMessage);
 			}
-			return $q.reject(rejection);
+			return $q.reject(data);
 	    }
 	  };
   })

@@ -8,18 +8,18 @@
 		return {
 			restrict : 'E',
 			templateUrl : "views/pilots.html",
-			controller : function($http) {
+			controller : function($http, $scope) {
 				console.log('Initializing the pilotCtrl.');
 				this.pilots = [];
 				var store = this;
 				
 				this.deletePilot = function(pilot){
-					$http({method: 'DELETE', url: '/aaa-web/rest-api/pilot/', data : pilot, headers : {'Content-Type' : 'application/json;charset=utf-8'}})
+					$http({method: 'DELETE', url: '/aaa-web/rest-api/pilot/' + pilot.username, data : pilot, headers : {'Content-Type' : 'application/json;charset=utf-8'}})
 					.success(function(data) {
 						store.listPilots();
 					})
 					.error(function(data) {
-						console.log(data);
+						$scope.tabCtrl.showErrorMessage('Delete pilot problem', data.errorMessage);
 					});
 				};
 				
@@ -29,7 +29,7 @@
 						store.pilots = data;
 					})
 					.error(function(data) {
-						console.log(data);
+						$scope.tabCtrl.showErrorMessage('List pilots problem', data.errorMessage);
 					});	
 				};
 				
@@ -58,13 +58,69 @@
 						$scope.pilotCtrl.listPilots();
 					})
 					.error(function(data) {
-						console.log(data);
-						store.errorMessage = data;
+						$scope.tabCtrl.showErrorMessage('Create pilot problem', data.errorMessage);
 					});
 				};
 				
 			},
 			controllerAs : 'createPilotCtrl'
+		};
+	});
+	app.directive("createLicense", function() {
+		return {
+			restrict : 'E',
+			templateUrl : "views/createLicense.html",
+			controller : function($http, $scope) {
+				console.log('Initializing the createLicenseCtrl.');
+				this.license = {};
+				var store = this;
+				store.errorMessage = '';
+				
+				this.setSelectedPilot = function(pilot, ctrl) {
+					this.pilot = pilot;
+				};
+				
+				this.createLicense = function(){
+					
+					$http({method: 'POST', url: '/aaa-web/rest-api/license/', data : store.license, headers : {'Content-Type' : 'application/json;charset=utf-8'}})
+					.success(function(createdLicense) {
+						
+						$http({method: 'PUT', url: '/aaa-web/rest-api/pilot/' + store.pilot.username + '/add-license/', data : createdLicense, headers : {'Content-Type' : 'application/json;charset=utf-8'}})
+						.success(function(updatedPilot) {
+							$('#createLicenseDialog').modal('hide');
+							store.license = {};
+							$scope.pilotCtrl.listPilots();
+						})
+						.error(function(data) {
+							$scope.tabCtrl.showErrorMessage('Create license problem', data.errorMessage);
+						});
+					})
+					.error(function(data) {
+						$scope.tabCtrl.showErrorMessage('Create license problem', data.errorMessage);
+					});
+				};
+				
+				this.deleteLicense = function(pilot, license){
+					
+					$http({method: 'DELETE', url: '/aaa-web/rest-api/pilot/' + pilot.username + '/delete-license/', data : license, headers : {'Content-Type' : 'application/json;charset=utf-8'}})
+					.success(function(data) {
+						
+						$http({method: 'DELETE', url: '/aaa-web/rest-api/license/' + license.id, data : license, headers : {'Content-Type' : 'application/json;charset=utf-8'}})
+						.success(function(createdLicense) {
+							store.license = {};
+							$scope.pilotCtrl.listPilots();
+						})
+						.error(function(data) {
+							$scope.tabCtrl.showErrorMessage('Delete license problem', data.errorMessage);
+						});
+					})
+					.error(function(data) {
+						$scope.tabCtrl.showErrorMessage('Delete license problem', data.errorMessage);
+					});
+				};
+				
+			},
+			controllerAs : 'createLicenseCtrl'
 		};
 	});
 	

@@ -26,7 +26,7 @@ import com.prodyna.pac.aaa.aircraft.AircraftType;
 @XmlRootElement
 @Table(name = "aaa_license")
 @NamedQueries({ @NamedQuery(name = PilotNamedQueries.SELECT_ALL_LICENSES, query = "SELECT l FROM License l") })
-public class License implements Serializable {
+public class License implements Serializable, Comparable<License> {
 
 	/** Generated serial version UID. */
 	private static final long serialVersionUID = -7525446826633069369L;
@@ -141,6 +141,18 @@ public class License implements Serializable {
 		builder.append("License [aircraftType=").append(this.aircraftType).append(", expirationDate=")
 				.append(this.expirationDate).append("]");
 		return builder.toString();
+	}
+
+	@Override
+	public int compareTo(final License other) {
+
+		int result = this.expirationDate.compareTo(other.expirationDate);
+
+		if (result == 0) {
+			result = this.id.compareTo(other.id);
+		}
+
+		return result;
 	}
 
 }

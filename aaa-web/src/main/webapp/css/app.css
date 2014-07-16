@@ -17,3 +17,7 @@ body {
 .aaa.navbar-form.navbar-right a.btn {
 		margin-top:8px!important;
 }
+
+div.modal-footer {
+	margin-top: 0px;
+}

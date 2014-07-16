@@ -12,6 +12,16 @@
 			</div>
 			<p>{{pilot.username}} ({{pilot.email}})</p>
 			<p>{{pilot.name}}</p>
+			<ul class="list-inline">
+				<li ng-repeat="license in pilot.licenses">
+					<em>{{license.aircraftType.name}} (valid until: {{license.expirationDate | asDate | date:'yyyy-MM-dd'}})
+					    <a class="btn-link" ng-click="createLicenseCtrl.deleteLicense(pilot, license); ">&times;</a>
+					</em>
+				</li>
+			</ul>
+			<div>
+				<small><a ng-click="createLicenseCtrl.setSelectedPilot(pilot)" class="btn-link" data-toggle="modal" data-target="#createLicenseDialog">Create new license</a></small>
+			</div>
 		</blockquote>
 		
 		<div>
@@ -21,3 +31,5 @@
 </div>
 
 <create-pilot></create-pilot>
+<create-license></create-license>
+

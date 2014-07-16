@@ -25,6 +25,7 @@ import com.prodyna.pac.aaa.auth.Credentials;
 import com.prodyna.pac.aaa.auth.CredentialsChange;
 import com.prodyna.pac.aaa.auth.Role;
 import com.prodyna.pac.aaa.auth.exception.InvalidAuthorizationException;
+import com.prodyna.pac.aaa.common.annotation.Monitored;
 import com.prodyna.pac.aaa.common.exception.EntityNotFoundException;
 import com.prodyna.pac.aaa.common.exception.ResponseStatusConstants;
 import com.prodyna.pac.aaa.pilot.Pilot;
@@ -37,6 +38,7 @@ import com.prodyna.pac.aaa.pilot.PilotService;
 @Path("authentication")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
+@Monitored
 public class AuthenticationRESTService {
 
 	/** Logger for this class. */

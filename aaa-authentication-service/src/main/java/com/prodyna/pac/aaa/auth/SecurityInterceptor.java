@@ -76,8 +76,8 @@ public class SecurityInterceptor {
 
 			if (this.credentials.getUsername() == null) {
 				this.logger
-						.debug("Operation denied. Someone tried to execute a method which is only allowed to be executed as pilot.",
-								this.credentials.getUsername());
+						.debug("Operation denied. Someone tried to execute the method [{}.{}] which is only allowed to be executed as pilot.",
+								ctx.getTarget().getClass().getName(), ctx.getMethod().getName());
 			} else {
 				return ctx.proceed();
 			}

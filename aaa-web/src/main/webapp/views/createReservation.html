@@ -1,0 +1,60 @@
+<div class="modal fade" id="createReservationDialog" tabindex="-1" role="dialog" aria-labelledby="reservationDialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Create new reservation</h4>
+			</div>
+			<form role="form" name="reservationForm" ng-submit="reservationForm.$valid && createReservationCtrl.createReservation()" novalidate>
+				<div class="modal-body" ng-show="aircraftCtrl.aircrafts.length == 0">
+					<div class="form-group">
+						<label>No aircraft found, please contact your administrator to create one first.</label>
+					</div>
+				</div>
+				<div class="modal-body" ng-hide="aircraftCtrl.aircrafts.length == 0">
+					<div class="form-group">
+						<label for="aircaft">Aircraft</label>
+						<select ng-model="createReservationCtrl.reservation.aircraft" ng-options="(aircraft.tailSign+' ('+aircraft.aircraftType.name+')') for aircraft in aircraftCtrl.aircrafts" class="form-control" required></select>
+					</div>
+					
+					<div class="form-group">
+						<label for="startDate">From</label>
+						<div class="dropdown">
+						  <a class="dropdown-toggle" id="dropdownStartDate" role="button" data-toggle="dropdown" data-target="#">
+						    <div class="input-group">
+						    	<input type="text" class="form-control" data-ng-model="createReservationCtrl.reservation.startDate" id="startDate">
+						    	<span class="input-group-addon">
+						    		<i class="glyphicon glyphicon-calendar"></i>
+						    	</span>
+						    </div>
+						  </a>
+						  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+						    <datetimepicker data-ng-model="createReservationCtrl.reservation.startDate" data-datetimepicker-config="{ dropdownSelector: '#dropdownStartDate' }"/>
+						  </ul>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="endDate">Until</label>
+						<div class="dropdown">
+						  <a class="dropdown-toggle" id="dropdownEndDate" role="button" data-toggle="dropdown" data-target="#">
+						    <div class="input-group">
+						    	<input type="text" class="form-control" data-ng-model="createReservationCtrl.reservation.endDate" id="endDate">
+						    	<span class="input-group-addon">
+						    		<i class="glyphicon glyphicon-calendar"></i>
+						    	</span>
+						    </div>
+						  </a>
+						  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+						    <datetimepicker data-ng-model="createReservationCtrl.reservation.endDate" data-datetimepicker-config="{ dropdownSelector: '#dropdownEndDate' }"/>
+						  </ul>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer" ng-hide="aircraftCtrl.aircrafts.length == 0">
+					<input type="submit" class="btn btn-primary" ng-class="{'disabled':reservationForm.$invalid}" value="Create" />
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
