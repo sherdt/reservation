@@ -2,25 +2,25 @@
     <wb-module deploy-name="aaa-ear-0.0.1-SNAPSHOT">
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/ear-resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/application" tag="defaultRootSource"/>
-        <dependent-module archiveName="aaa-common-service-1.0.0-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/aaa-common-service/aaa-common-service">
+        <dependent-module archiveName="aaa-common-service-1.0.0.jar" deploy-path="/" handle="module:/resource/aaa-common-service/aaa-common-service">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="aaa-common-client-1.0.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/aaa-common-client/aaa-common-client">
+        <dependent-module archiveName="aaa-common-client-1.0.0.jar" deploy-path="/lib" handle="module:/resource/aaa-common-client/aaa-common-client">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="aaa-aircraft-service-1.0.0-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/aaa-aircraft-service/aaa-aircraft-service">
+        <dependent-module archiveName="aaa-aircraft-service-1.0.0.jar" deploy-path="/" handle="module:/resource/aaa-aircraft-service/aaa-aircraft-service">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="aaa-aircraft-client-1.0.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/aaa-aircraft-client/aaa-aircraft-client">
+        <dependent-module archiveName="aaa-aircraft-client-1.0.0.jar" deploy-path="/lib" handle="module:/resource/aaa-aircraft-client/aaa-aircraft-client">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="aaa-pilot-client-1.0.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/aaa-pilot-client/aaa-pilot-client">
+        <dependent-module archiveName="aaa-pilot-client-1.0.0.jar" deploy-path="/lib" handle="module:/resource/aaa-pilot-client/aaa-pilot-client">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="aaa-authentication-client-1.0.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/aaa-authentication-client/aaa-authentication-client">
+        <dependent-module archiveName="aaa-authentication-client-1.0.0.jar" deploy-path="/lib" handle="module:/resource/aaa-authentication-client/aaa-authentication-client">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="aaa-authentication-service-1.0.0-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/aaa-authentication-service/aaa-authentication-service">
+        <dependent-module archiveName="aaa-authentication-service-1.0.0.jar" deploy-path="/" handle="module:/resource/aaa-authentication-service/aaa-authentication-service">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="commons-codec-1.9.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-codec/commons-codec/1.9/commons-codec-1.9.jar">
@@ -41,16 +41,16 @@
         <dependent-module archiveName="bcprov-jdk15on-1.49.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/bouncycastle/bcprov-jdk15on/1.49/bcprov-jdk15on-1.49.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="aaa-reservation-service-1.0.0-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/aaa-reservation-service/aaa-reservation-service">
+        <dependent-module archiveName="aaa-reservation-service-1.0.0.jar" deploy-path="/" handle="module:/resource/aaa-reservation-service/aaa-reservation-service">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="aaa-reservation-client-1.0.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/aaa-reservation-client/aaa-reservation-client">
+        <dependent-module archiveName="aaa-reservation-client-1.0.0.jar" deploy-path="/lib" handle="module:/resource/aaa-reservation-client/aaa-reservation-client">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="aaa-pilot-service-1.0.0-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/aaa-pilot-service/aaa-pilot-service">
+        <dependent-module archiveName="aaa-pilot-service-1.0.0.jar" deploy-path="/" handle="module:/resource/aaa-pilot-service/aaa-pilot-service">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="aaa-web-1.0.0-SNAPSHOT.war" deploy-path="/" handle="module:/resource/aaa-web/aaa-web">
+        <dependent-module archiveName="aaa-web-1.0.0.war" deploy-path="/" handle="module:/resource/aaa-web/aaa-web">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="activation-1.1.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/activation/activation/1.1.1/activation-1.1.1.jar">
