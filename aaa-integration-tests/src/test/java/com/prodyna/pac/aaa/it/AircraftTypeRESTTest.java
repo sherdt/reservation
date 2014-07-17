@@ -15,7 +15,6 @@ import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.junit.InSequence;
 import org.jboss.arquillian.test.api.ArquillianResource;
-import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.importer.ExplodedImporter;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -36,28 +35,36 @@ import com.prodyna.pac.aaa.aircraft.service.rest.AircraftTypeRESTServiceImpl;
 @RunWith(Arquillian.class)
 public class AircraftTypeRESTTest {
 
+	/** Injected url of the application server. */
 	@ArquillianResource
 	private URL url;
 
-	protected Client createClient() {
-		final Client client = ClientBuilder.newClient();
-		client.register(JsonProcessingFeature.class); // needed for "normal"
-		client.register(JacksonFeature.class); // needed for dynamic pr
-		return client;
-	}
-
-	protected WebTarget createWebTarget() {
+	/**
+	 * Creates the dynamic proxy for given resource type.
+	 * 
+	 * @param resourceType
+	 *            Type of the service to create the dynamic proxy for.
+	 * @return Generated dynamic proxy.
+	 */
+	private <C> C createService(final Class<C> resourceType) {
 		final String fullPath = this.url.toString() + "rest-api";
-		final WebTarget target = this.createClient().target(fullPath);
-		return target;
+
+		final Client client = ClientBuilder.newClient();
+		client.register(JsonProcessingFeature.class);
+		client.register(JacksonFeature.class);
+
+		final WebTarget target = client.target(fullPath);
+
+		return WebResourceFactory.newResource(resourceType, target);
 	}
 
-	protected <C> C createService(final Class<C> ifaceType) {
-		return WebResourceFactory.newResource(ifaceType, this.createWebTarget());
-	}
-
+	/**
+	 * Constructs the web archive used for deployment for tests.
+	 * 
+	 * @return generated web archive.
+	 */
 	@Deployment
-	public static Archive<?> createArchive() {
+	private static WebArchive createArchive() {
 		final WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "test-aircraft-type-rest.war");
 		webArchive.addPackages(true, "com.prodyna.pac.aaa");
 		webArchive.addAsResource("persistence.xml", "META-INF/persistence.xml");
@@ -67,6 +74,11 @@ public class AircraftTypeRESTTest {
 		return webArchive;
 	}
 
+	/**
+	 * Test for {@link AircraftTypeRESTService#listAircraftTypes()},
+	 * {@link AircraftTypeRESTService#createAircraftType(AircraftType)} and
+	 * {@link AircraftTypeRESTService#deleteAircraftType(String)}.
+	 */
 	@Test
 	@RunAsClient
 	@InSequence(1)
