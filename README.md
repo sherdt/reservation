@@ -210,7 +210,6 @@ If you are going to start the JUnit from Eclipse, you will have to provide the f
 
 As you can see the wildfly-8.0.0.Final is going to be downloaded to the directory `cargo/extracts/wildfly-8.0.0.Final/wildfly-8.0.0.Final`. This is done automatically in phase `clean` if you trigger the maven build. It means, you have to execute maven at least once to get the wildfly downloaded.
 
-
 Release handling
 ---
 
@@ -259,3 +258,16 @@ Content of the resulting ear file `aaa-ear-1.0.0-SNAPSHOT.ear`:
         │           ├── pom.properties
         │           └── pom.xml
         └── persistence.xml
+        
+Once the deployment is perfomed, the application is accessible at (if you use the default wildfly configuration, otherwise you have to adjust the port):
+
+    http://localhost:8080/aaa-web
+    
+Creadentials for administrator:
+
+    Username: admin
+    Password: Test123!
+
+Administrator is allowed to create pilots. The default password for created pilots is: `changeit`
+
+

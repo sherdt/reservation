@@ -93,11 +93,14 @@ angular.module('aircraftAllocationApp.controllers', [])
 				$window.sessionStorage.isAdmin = $scope.authCtrl.isAdmin = $scope.authCtrl.profile.role === 'ADMIN';
 				
 				$('#loginDialog').modal('hide');
+				
+				$scope.reservationCtrl.listReservations();
 			})
 			.error(function (data, status, headers, config) {
 				// Erase the token if the user fails to log in
 				delete $window.sessionStorage.token;
 				delete $window.sessionStorage.profile;
+				delete $scope.authCtrl.profile;
 				$window.sessionStorage.isAuthenticated = false;
 				
 				// Handle login errors here
@@ -112,6 +115,9 @@ angular.module('aircraftAllocationApp.controllers', [])
 			$window.sessionStorage.isAuthenticated = false;
 			$window.sessionStorage.profile = '{}';
 			delete $window.sessionStorage.token;
+			delete $scope.authCtrl.profile;
+			
+			$scope.reservationCtrl.listReservations();
 	  };
   }])
   .factory('authInterceptor', function ($q, $window) {
