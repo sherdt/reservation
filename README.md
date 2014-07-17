@@ -137,8 +137,7 @@ Technologies (JavaEE7)
 Development environment
 ---
 
-**Application server**:	wildfly-8.0.0.Final
-
+**Application server**:	wildfly-8.0.0.Final 
 **Database**:	MySQL
 
 The application uses the following ***persistence.xml*** definition, which can be found in folder `aaa/aaa-ear/src/main/application/META-INF`:

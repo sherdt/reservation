@@ -44,9 +44,6 @@
 		<fileSet>
 			<outputDirectory>/Aircraft Allocation App/documents</outputDirectory>
 			<directory>documents</directory>
-			<includes>
-				<include>*.pdf</include>
-			</includes>
 		</fileSet>
 		<fileSet>
 			<outputDirectory>/Aircraft Allocation App/sql</outputDirectory>

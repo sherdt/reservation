@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xmi:id="_qb8akM37EdqwVrslYOdUDA">
+  <elementImport xmi:id="_VFH7YLnNEeOFYvDAtMNfaA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+  </elementImport>
+  <elementImport xmi:id="_VFJwkLnNEeOFYvDAtMNfaA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+  </elementImport>
+  <elementImport xmi:id="_VFJwkbnNEeOFYvDAtMNfaA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+  </elementImport>
+  <elementImport xmi:id="_VFJwkrnNEeOFYvDAtMNfaA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#UnlimitedNatural"/>
+  </elementImport>
+  <packagedElement xmi:type="uml:Package" xmi:id="_w8IxIM37EdqwVrslYOdUDA" name="Reservation">
+    <packagedElement xmi:type="uml:Class" xmi:id="_08KjMLgREeOLUd2M4-jqJA" name="Aircraft">
+      <ownedAttribute xmi:id="_Kpg4ILnNEeOFYvDAtMNfaA" name="tailsign"/>
+      <ownedAttribute xmi:id="_u1fzELnWEeOFYvDAtMNfaA" name="aircraftType"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_2CXWQLgREeOLUd2M4-jqJA" name="Pilot">
+      <ownedAttribute xmi:id="_OqA5ILnNEeOFYvDAtMNfaA" name="username">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_QgTFULnNEeOFYvDAtMNfaA" name="password"/>
+      <ownedAttribute xmi:id="_j4fpELnNEeOFYvDAtMNfaA" name="name">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_BtK5ILnWEeOFYvDAtMNfaA" name="email">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_Zcm5ALnNEeOFYvDAtMNfaA" name="licenses" type="_r1BawLnNEeOFYvDAtMNfaA"/>
+      <ownedAttribute xmi:id="_PIVFkOQ6EeO7LMjoV3pIJQ" name="reservations" type="_23AfQLgREeOLUd2M4-jqJA"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_23AfQLgREeOLUd2M4-jqJA" name="Reservation">
+      <ownedAttribute xmi:id="_JfTSULnOEeOFYvDAtMNfaA" name="startDate"/>
+      <ownedAttribute xmi:id="_K-cw4LnOEeOFYvDAtMNfaA" name="endDate"/>
+      <ownedAttribute xmi:id="_USCigLnWEeOFYvDAtMNfaA" name="state"/>
+      <ownedAttribute xmi:id="_pebnwLnWEeOFYvDAtMNfaA" name="aircraft" type="_08KjMLgREeOLUd2M4-jqJA"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_yw75cLnMEeOFYvDAtMNfaA" name="A_&lt;aircraft>_&lt;aircraftType>" memberEnd="_yw75cbnMEeOFYvDAtMNfaA _yw75dLnMEeOFYvDAtMNfaA" navigableOwnedEnd="_yw75dLnMEeOFYvDAtMNfaA">
+      <ownedEnd xmi:id="_yw75cbnMEeOFYvDAtMNfaA" name="aircraft" type="_08KjMLgREeOLUd2M4-jqJA" association="_yw75cLnMEeOFYvDAtMNfaA">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_yw75crnMEeOFYvDAtMNfaA" value="*"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_yw75c7nMEeOFYvDAtMNfaA"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_yw75dLnMEeOFYvDAtMNfaA" name="aircraftType" type="_vlt6MNoDEeOQbeGC380Vrw" association="_yw75cLnMEeOFYvDAtMNfaA">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_yw75dbnMEeOFYvDAtMNfaA" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_yw75drnMEeOFYvDAtMNfaA" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_r1BawLnNEeOFYvDAtMNfaA" name="License">
+      <ownedAttribute xmi:id="_tqVWkLnNEeOFYvDAtMNfaA" name="validUntilDate"/>
+      <ownedAttribute xmi:id="_0pbgkLnWEeOFYvDAtMNfaA" name="aircraftType"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_BQ01ALnOEeOFYvDAtMNfaA" name="A_&lt;reservation>_&lt;aircraft>" memberEnd="_BQ01AbnOEeOFYvDAtMNfaA _BQ01BLnOEeOFYvDAtMNfaA" navigableOwnedEnd="_BQ01BLnOEeOFYvDAtMNfaA">
+      <ownedEnd xmi:id="_BQ01AbnOEeOFYvDAtMNfaA" name="reservation" type="_23AfQLgREeOLUd2M4-jqJA" association="_BQ01ALnOEeOFYvDAtMNfaA">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_BQ01ArnOEeOFYvDAtMNfaA" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_BQ01A7nOEeOFYvDAtMNfaA" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_BQ01BLnOEeOFYvDAtMNfaA" name="aircraft" type="_08KjMLgREeOLUd2M4-jqJA" association="_BQ01ALnOEeOFYvDAtMNfaA">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_BQ01BbnOEeOFYvDAtMNfaA" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_BQ01BrnOEeOFYvDAtMNfaA" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_i0upgLnOEeOFYvDAtMNfaA" name="A_&lt;pilot>_&lt;license>" memberEnd="_i0upgbnOEeOFYvDAtMNfaA _i0uphLnOEeOFYvDAtMNfaA" navigableOwnedEnd="_i0uphLnOEeOFYvDAtMNfaA">
+      <ownedEnd xmi:id="_i0upgbnOEeOFYvDAtMNfaA" name="pilot" type="_2CXWQLgREeOLUd2M4-jqJA" association="_i0upgLnOEeOFYvDAtMNfaA">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_i0upgrnOEeOFYvDAtMNfaA" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_i0upg7nOEeOFYvDAtMNfaA" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_i0uphLnOEeOFYvDAtMNfaA" name="license" type="_r1BawLnNEeOFYvDAtMNfaA" association="_i0upgLnOEeOFYvDAtMNfaA">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_i0uphbnOEeOFYvDAtMNfaA" value="*"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_i0uphrnOEeOFYvDAtMNfaA"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_oPwHwLnOEeOFYvDAtMNfaA" name="A_&lt;license>_&lt;aircraftType>" memberEnd="_oPwHwbnOEeOFYvDAtMNfaA _oPwHxLnOEeOFYvDAtMNfaA" navigableOwnedEnd="_oPwHxLnOEeOFYvDAtMNfaA">
+      <ownedEnd xmi:id="_oPwHwbnOEeOFYvDAtMNfaA" name="license" type="_r1BawLnNEeOFYvDAtMNfaA" association="_oPwHwLnOEeOFYvDAtMNfaA">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_oPwHwrnOEeOFYvDAtMNfaA" value="*"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_oPwHw7nOEeOFYvDAtMNfaA"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_oPwHxLnOEeOFYvDAtMNfaA" name="aircraftType" type="_vlt6MNoDEeOQbeGC380Vrw" association="_oPwHwLnOEeOFYvDAtMNfaA">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_oPwHxbnOEeOFYvDAtMNfaA" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_oPwHxrnOEeOFYvDAtMNfaA" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_1detULnOEeOFYvDAtMNfaA" name="A_&lt;reservation>_&lt;reservationState>" memberEnd="_1detUbnOEeOFYvDAtMNfaA _1detVLnOEeOFYvDAtMNfaA" navigableOwnedEnd="_1detVLnOEeOFYvDAtMNfaA">
+      <ownedEnd xmi:id="_1detUbnOEeOFYvDAtMNfaA" name="reservation" type="_23AfQLgREeOLUd2M4-jqJA" association="_1detULnOEeOFYvDAtMNfaA">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_1detUrnOEeOFYvDAtMNfaA" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_1detU7nOEeOFYvDAtMNfaA" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_1detVLnOEeOFYvDAtMNfaA" name="reservationState" type="_ma6-kNoDEeOQbeGC380Vrw" association="_1detULnOEeOFYvDAtMNfaA">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_1detVbnOEeOFYvDAtMNfaA" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_1detVrnOEeOFYvDAtMNfaA" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_ZikFILnPEeOFYvDAtMNfaA" name="ReservationRestService">
+      <ownedOperation xmi:id="_ETtFQLnQEeOFYvDAtMNfaA" name="getAllReservations"/>
+      <ownedOperation xmi:id="_IklEkLnQEeOFYvDAtMNfaA" name="reserveAircraft"/>
+      <ownedOperation xmi:id="_Slz48LnQEeOFYvDAtMNfaA" name="returnAircraft"/>
+      <ownedOperation xmi:id="_YrHDQLnQEeOFYvDAtMNfaA" name="lendAircraft"/>
+      <ownedOperation xmi:id="_lNrL8LnQEeOFYvDAtMNfaA" name="cancelReservation"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_tbYpsLnPEeOFYvDAtMNfaA" name="AircraftRestService">
+      <ownedOperation xmi:id="_yYDYALnPEeOFYvDAtMNfaA" name="getAllAircrafts"/>
+      <ownedOperation xmi:id="_11Rs0LnPEeOFYvDAtMNfaA" name="getAllAircraftsByAircraftType"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_1gbr8LnUEeOFYvDAtMNfaA" name="PilotService">
+      <ownedOperation xmi:id="_3Pi5ILnUEeOFYvDAtMNfaA" name="addPilot"/>
+      <ownedOperation xmi:id="_AP--4LnVEeOFYvDAtMNfaA" name="removePilot"/>
+      <ownedOperation xmi:id="_H3RgYLnVEeOFYvDAtMNfaA" name="updatePilot"/>
+      <ownedOperation xmi:id="_a8sSELnVEeOFYvDAtMNfaA" name="addLicenseToPilot"/>
+      <ownedOperation xmi:id="_cnltoLnVEeOFYvDAtMNfaA" name="removeLicenseFromPilot"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_A2nkQLnZEeOFYvDAtMNfaA" name="AircraftTypeService">
+      <ownedOperation xmi:id="_CynW4LnZEeOFYvDAtMNfaA" name="addAircraftType"/>
+      <ownedOperation xmi:id="_EA35wLnZEeOFYvDAtMNfaA" name="removeAircraftType"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_KvgU8LnZEeOFYvDAtMNfaA" name="ReservationStateService">
+      <ownedOperation xmi:id="_MxcXgLnZEeOFYvDAtMNfaA" name="addReservationState"/>
+      <ownedOperation xmi:id="_OWPLELnZEeOFYvDAtMNfaA" name="removeReservationState"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_gq1j0LnZEeOFYvDAtMNfaA" name="AircraftService">
+      <ownedOperation xmi:id="_y6uDYLnTEeOFYvDAtMNfaA" name="addAircraft"/>
+      <ownedOperation xmi:id="_z35dULnTEeOFYvDAtMNfaA" name="removeAircraft"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_GOVaYLnaEeOFYvDAtMNfaA" name="PilotRestService">
+      <ownedOperation xmi:id="_fNzIoLnaEeOFYvDAtMNfaA" name="updateName"/>
+      <ownedOperation xmi:id="_bRYWYLnaEeOFYvDAtMNfaA" name="updateEmail"/>
+      <ownedOperation xmi:id="_J10ecLnaEeOFYvDAtMNfaA" name="updatePassword"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_w6PSkNoCEeOQbeGC380Vrw" name="A_&lt;pilot>_&lt;reservation>" memberEnd="_w6P5oNoCEeOQbeGC380Vrw _w6P5o9oCEeOQbeGC380Vrw" navigableOwnedEnd="_w6P5o9oCEeOQbeGC380Vrw">
+      <ownedEnd xmi:id="_w6P5oNoCEeOQbeGC380Vrw" name="pilot" type="_2CXWQLgREeOLUd2M4-jqJA" association="_w6PSkNoCEeOQbeGC380Vrw">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_w6P5odoCEeOQbeGC380Vrw" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_w6P5otoCEeOQbeGC380Vrw" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_w6P5o9oCEeOQbeGC380Vrw" name="reservation" type="_23AfQLgREeOLUd2M4-jqJA" association="_w6PSkNoCEeOQbeGC380Vrw">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_w6P5pNoCEeOQbeGC380Vrw" value="*"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_w6P5pdoCEeOQbeGC380Vrw"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_ma6-kNoDEeOQbeGC380Vrw" name="ReservationState">
+      <ownedAttribute xmi:id="_n0XdwNoDEeOQbeGC380Vrw" name="name"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_vlt6MNoDEeOQbeGC380Vrw" name="AircraftType">
+      <ownedAttribute xmi:id="_z4sLQNoDEeOQbeGC380Vrw" name="name"/>
+    </packagedElement>
+  </packagedElement>
+</uml:Model>
