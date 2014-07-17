@@ -529,7 +529,7 @@ public class ReservationRESTService {
 		}
 
 		if (now.after(storedReservation.getEndDate())) {
-			throw new ReservationInvalidException("The reservation end date is exceed, sorry you are too late.",
+			throw new ReservationInvalidException("The reservation end date is exceeded, sorry you are too late.",
 					ResponseStatusConstants.RESOURCE_INVALID);
 		}
 

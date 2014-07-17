@@ -59,7 +59,9 @@ public class ReservationCleanupBean {
 		}
 
 		for (final Reservation reservation : allReservations) {
-			if ("LEANT".equals(reservation.getReservationState().getName()) && now.after(reservation.getEndDate())) {
+			if (now.after(reservation.getEndDate())
+					&& ("LEANT".equals(reservation.getReservationState().getName()) || "RESERVED".equals(reservation
+							.getReservationState().getName()))) {
 				reservation.setReservationState(reservationStateReturned);
 				this.reservationService.updateReservation(reservation);
 			}
