@@ -1,4 +1,4 @@
-Aircrat Allocation App
+Aircraft Allocation App
 ====
 
 SCM
